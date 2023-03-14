@@ -1,0 +1,19 @@
+.profile__caption {
+    margin: 0;
+    font-size: 18px;
+    line-height: 22px;
+    color: #fff;
+}
+
+@media screen and (max-width: 800px) {
+    .profile__caption {
+        font-size: 14px;
+        line-height: 17px;
+    }
+}
+
+@media screen and (max-width: 636px) {
+    .profile__caption {
+        text-align: center;
+    }
+}

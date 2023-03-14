@@ -1,0 +1,10 @@
+.profile__item {
+    display: flex;
+    gap: 30px;
+}
+
+@media screen and (max-width: 636px) {
+    .profile__item {
+        display: block;
+    }
+}
