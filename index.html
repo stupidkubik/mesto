@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="./pages/index.css">
     </head>
     <body class="page">
+
         <header class="header page__header">
             <img class="header__logo" src="./images/logo/logo-white.png" alt="Логотип">
         </header>
@@ -24,9 +25,22 @@
                 </div>
                 <button class="profile__add-element"></button>
             </section>
+
         </main>
         <footer class="footer">
             <p class="footer__caption">&#169; 2020 Mesto Russia</p>
         </footer>
+
+        <div class="popup popup_opened">
+            <div class="popup__overlay"></div>
+            <form class="popup__container" action="">
+                <h2 class="popup__title">Редактировать профиль</h2>
+                <input class="popup__profile-name" type="text" placeholder="Жак-Ив Кусто">
+                <input class="popup__profile-caption" placeholder="Исследователь океана" type="text">
+                <button class="popup__close"></button>
+                <button class="popup__submit" type="submit">Сохранить</button>
+            </form>            
+        </div>
+
     </body>
 </html>
