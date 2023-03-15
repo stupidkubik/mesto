@@ -7,6 +7,11 @@
     background-image: url(../../../images/logo/icon-pen.png);
     background-position: center;
     background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.profile__edit:hover {
+    opacity: .6;
 }
 
 @media screen and (max-width: 636px) {
