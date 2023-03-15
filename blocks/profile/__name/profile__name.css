@@ -25,3 +25,10 @@
         margin-bottom: 14px;
     }
 }
+
+@media screen and (max-width: 636px) {
+    .profile__name {
+        padding-left: 25px;
+        margin-bottom: 5px;
+    }
+}
