@@ -1,0 +1,9 @@
+.element__like-icon {
+    width: 22px;
+    height: 20px;
+    background: #fff;
+    background-image: url(../../../images/logo/icon-like_disabled.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+}

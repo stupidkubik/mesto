@@ -3,13 +3,13 @@
     min-height: 120px;
 }
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: 1070px) {
     .page__content {
         margin: 0 100px;
     }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 870px) {
     .page__content {
         margin: 0 50px;
     }
