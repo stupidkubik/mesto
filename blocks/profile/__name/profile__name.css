@@ -1,6 +1,6 @@
 .profile__name {
     display: inline-block;
-    margin: 0 18px 16px 0;
+    margin: 0 15px 9px 0;
     font-weight: 500; /*изменить шрифт*/
     font-size: 42px;
     line-height: 48px;
@@ -28,7 +28,8 @@
 
 @media screen and (max-width: 636px) {
     .profile__name {
-        padding-left: 25px;
-        margin-bottom: 5px;
+        padding-left: 28px;
+        margin-bottom: 8px;
+        margin-right: 6px;
     }
 }
