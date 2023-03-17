@@ -1,8 +1,8 @@
 .page__header {
     box-sizing: border-box;
     margin: 45px 200px 40px;
-    border-bottom: solid 1px #545454;
-    min-height: 74px;
+    padding-bottom: 41px;
+    border-bottom: solid 1px rgba(84, 84, 84, 0.7);
 }
 
 @media screen and (max-width: 1070px) {
@@ -20,6 +20,5 @@
 @media screen and (max-width: 530px) {
     .page__header {
         margin: 28px 0 42px;
-        min-height: 56px;
     }
 }

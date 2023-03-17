@@ -7,7 +7,7 @@
     background-image: url(../../../images/logo/icon-close.svg);
     background-repeat: no-repeat;
     background-position: center;
-    background-color: #000;
+    background-color: transparent;
     background-size: contain;
     padding: 0;
     border: 0;
@@ -16,6 +16,7 @@
 
 .popup__close:hover {
     opacity: .6;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 530px) {

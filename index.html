@@ -1,73 +1,86 @@
 <!DOCTYPE html>
 <html lang="ru">
     <head>
-        <meta charset=UTF-8">
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Место</title>
         <link rel="stylesheet" href="./pages/index.css">
     </head>
+
     <body class="page">
 
         <header class="header page__header">
-            <img class="header__logo" src="./images/logo/logo-white.png" alt="Логотип">
+            <img class="header__logo" src="./images/logo/logo-white.svg" alt="Логотип">
         </header>
+
         <main class="content page__content">
+
             <section class="profile">
+
                 <div class="profile__item">
-                    <div class="profile__avatar"></div>
+                    <img class="profile__avatar" src="./images/profile__avatar.jpg" alt="фотография Жак-Ива Кусто">
+                    
                     <div class="profile__info">
                         <div class="profile__name-item">
                             <h1 class="profile__name">Жак-Ив Кусто</h1>
-                            <button class="profile__edit" type="button"></button>
+                            <button class="profile__edit" type="button" aria-label="редактировать профиль"></button>
                         </div>
                         <p class="profile__caption">Исследователь океана</p>
                     </div>
+
                 </div>
-                <button class="profile__add-element"></button>
+
+                <button class="profile__add-element" type="button" aria-label="добавить фотографию"></button>
             </section>
 
             <section class="elements">
                 <ul class="elements__list">
+
                     <li class="element content__element">
                         <img class="element__image" src="./images/indonesia.jpg" alt="Вид на рисовые поля на Бали">
                         <div class="element__name">
                             <h2 class="element__title">Индонезия</h2>
-                            <button class="element__like-icon"></button>
+                            <button class="element__like-icon" type="button" aria-label="поставить лайк"></button>
                         </div>
                     </li>
+
                     <li class="element content__element">
                         <img class="element__image" src="./images/iceland.jpg" alt="Вид на водопад Деттифосс">
                         <div class="element__name">
                             <h2 class="element__title">Исландия</h2>
-                            <button class="element__like-icon"></button>
+                            <button class="element__like-icon" type="button" aria-label="поставить лайк"></button>
                         </div>
                     </li>
+
                     <li class="element content__element">
                         <img class="element__image" src="./images/france.jpg" alt="Вид на Эйфелеву башню сковзь деревья">
                         <div class="element__name">
                             <h2 class="element__title">Франция</h2>
-                            <button class="element__like-icon"></button>
+                            <button class="element__like-icon" type="button" aria-label="поставить лайк"></button>
                         </div>
                     </li>
+
                     <li class="element content__element">
                         <img class="element__image" src="./images/california.jpg" alt="Вид на мост Золотые ворота в тумане">
                         <div class="element__name">
                             <h2 class="element__title">Калифорния</h2>
-                            <button class="element__like-icon"></button>
+                            <button class="element__like-icon" type="button" aria-label="поставить лайк"></button>
                         </div>
                     </li>
+
                     <li class="element content__element">
                         <img class="element__image" src="./images/thailand.jpg" alt="Вид на храм Ват Ронг Кхун в Чианграе">
                         <div class="element__name">
-                            <h2 class="element__title">Тайланд</h2>
-                            <button class="element__like-icon"></button>
+                            <h2 class="element__title">Таиланд</h2>
+                            <button class="element__like-icon" type="button" aria-label="поставить лайк"></button>
                         </div>
                     </li>
+
                     <li class="element content__element">
                         <img class="element__image" src="./images/vietnam.jpg" alt="Вид на закатное небо через кокосовые пальмы">
                         <div class="element__name">
                             <h2 class="element__title">Вьетнам</h2>
-                            <button class="element__like-icon"></button>
+                            <button class="element__like-icon" type="button" aria-label="поставить лайк"></button>
                         </div>
                     </li>
 
@@ -75,20 +88,39 @@
             </section>
 
         </main>
+
         <footer class="footer">
             <p class="footer__caption">&#169; 2020 Mesto Russia</p>
         </footer>
 
         <div class="popup">
-            <div class="popup__overlay"></div>
-            <form class="popup__container" action="">
+            <div class="popup__container">
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <input class="popup__profile-name" type="text" value="">
-                <input class="popup__profile-caption" type="text" value="">
-                <button class="popup__close" type="button"></button>
-                <button class="popup__submit" type="button">Сохранить</button>
-            </form>            
+
+                <button class="popup__close" type="button" aria-label="Закрыть окно"></button>
+
+                <form class="popup__form" name="profile-form">
+                    
+                    <input 
+                    class="popup__input popup__input_profile_name" 
+                    type="text" 
+                    name="profile-name" 
+                    value="" 
+                    placeholder="Введите своё имя">
+
+                    <input 
+                    class="popup__input popup__input_profile_caption" 
+                    type="text" 
+                    name="profile-caption" 
+                    value="" 
+                    placeholder="Опишите себя">
+
+                    <button class="popup__submit" type="submit">Сохранить</button>
+                </form>
+
+            </div>
         </div>
+
         <script src="./pages/index.js"></script>
     </body>
 </html>

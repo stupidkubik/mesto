@@ -3,8 +3,9 @@
     margin: 51px 0 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    grid-template-rows: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, 282px);
+    grid-template-rows: repeat(auto-fit, 361px);
+    justify-content: center;
     gap: 20px 17px;
 }
 

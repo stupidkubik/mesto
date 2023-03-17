@@ -1,42 +1,33 @@
-/* Выбираем кнопку редактирования профиля, 
-кнопку закрытия поп-апа и сам поп-ап.
-Затем через toggle добавляем или убираем класс, 
-который переписывает display с none на flex */
+const popupOpened = document.querySelector('.profile__edit');
+const popupClosed = document.querySelector('.popup__close');
+const popup = document.querySelector('.popup');
 
-let popupOpened = document.querySelector('.profile__edit');
-let popupClosed = document.querySelector('.popup__close');
-let popup = document.querySelector('.popup');
+const profileName = document.querySelector('.profile__name');
+const profileCaption = document.querySelector('.profile__caption');
 
-function switchPopup() {
-    popup.classList.toggle('popup_opened');
+const popupForm = document.querySelector('.popup__form');
+const popupProfileName = popupForm.querySelector('.popup__input_profile_name');
+const popupProfileCaption = popupForm.querySelector('.popup__input_profile_caption');
+
+function openPopup() {
+    popupProfileName.value = `${profileName.textContent}`;
+    popupProfileCaption.value = `${profileCaption.textContent}`;
+    popup.classList.add('popup_opened');
 }
 
-popupOpened.addEventListener('click', switchPopup);
-popupClosed.addEventListener('click', switchPopup);
+function closePopup() {
+    popup.classList.remove('popup_opened');
+}
+
+popupOpened.addEventListener('click', openPopup);
+popupClosed.addEventListener('click', closePopup);
 
 
-/* Выбираем имя и описание профиля, а также поля ввода в поп-апе.
-Затем вписываем значения из профиля в атрибуты value */
+popupForm.addEventListener('submit', changeProfile);
 
-let profileName = document.querySelector('.profile__name');
-let profileCaption = document.querySelector('.profile__caption');
-let popupProfileName = document.querySelector('.popup__profile-name');
-let popupProfileCaption = document.querySelector('.popup__profile-caption');
-
-popupProfileName.value = `${profileName.textContent}`;
-popupProfileCaption.value = `${profileCaption.textContent}`;
-
-
-/* Выбираем кнопку "Сохранить" и передаем ей значения из input поп-апа.
-Ещё вызываем функцию закрытия поп-апа. */
-
-let popupSubmit = document.querySelector('.popup__submit');
-
-function changeProfile() {
+function changeProfile(event) {
+    event.preventDefault();
     profileName.textContent = popupProfileName.value;
     profileCaption.textContent = popupProfileCaption.value;
-    
-    switchPopup(); 
+    closePopup();
 }
-
-popupSubmit.addEventListener('click', changeProfile);
