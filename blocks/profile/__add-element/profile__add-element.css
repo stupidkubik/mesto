@@ -18,7 +18,13 @@
 
 @media screen and (max-width: 636px) {
     .profile__add-element {
-        width: 100%;
+        width: 50%;
         margin-top: 34px;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .profile__add-element {
+        width: 100%;
     }
 }
