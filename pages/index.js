@@ -1,35 +1,33 @@
-//Переменные для окна попапа
+//Общие переменные для попапов
 
-const popupOpened = document.querySelector('.profile__edit');
-const popupClosed = document.querySelector('.popup__close');
-const popup = document.querySelector('.popup');
+const popupClosed = document.querySelectorAll('.popup__close');
+const popupForm = document.querySelectorAll('.popup__form');
 
-// Переменные для попапа с профилем
 
+// Переменные и логика для попапа с профилем
+
+const popupProfile = document.querySelector('.popup_type_profile');
+const popupProfileOpened = document.querySelector('.profile__edit');
 const profileName = document.querySelector('.profile__name');
 const profileCaption = document.querySelector('.profile__caption');
 
-const popupForm = document.querySelector('.popup__form');
-const popupProfileName = popupForm.querySelector('.popup__input_profile_name');
-const popupProfileCaption = popupForm.querySelector('.popup__input_profile_caption');
+const popupProfileName = popupForm[0].querySelector('.popup__input_profile_name');
+const popupProfileCaption = popupForm[0].querySelector('.popup__input_profile_caption');
 
-
-
-function openPopup() { // Открываем попап и вставляем значения
+function openPopupProfile() { // Открываем попап и вставляем значения
     popupProfileName.value = `${profileName.textContent}`;
     popupProfileCaption.value = `${profileCaption.textContent}`;
-    popup.classList.add('popup_opened');
+    popupProfile.classList.add('popup_opened');
 }
 
-function closePopup() { // Закрываем попап
-    popup.classList.remove('popup_opened');
+function closePopupProfile() { // Закрываем попап
+    popupProfile.classList.remove('popup_opened');
 }
 
-popupOpened.addEventListener('click', openPopup);
-popupClosed.addEventListener('click', closePopup);
+popupProfileOpened.addEventListener('click', openPopupProfile);
+popupClosed[0].addEventListener('click', closePopupProfile);
 
-
-popupForm.addEventListener('submit', changeProfile); // Сохраняем изменения
+popupForm[0].addEventListener('submit', changeProfile); // Сохраняем изменения
 
 function changeProfile(event) { //Сохраняем изменения в профиле
     event.preventDefault();
@@ -37,6 +35,22 @@ function changeProfile(event) { //Сохраняем изменения в пр�
     profileCaption.textContent = popupProfileCaption.value;
     closePopup();
 }
+
+
+// Переменные и логика для попапа с добавлением карточек
+
+const popupCard = document.querySelector('.popup_type_add');
+const popupCardOpened = document.querySelector('.profile__add-element');
+const cardName = document.querySelector('.popup__input_card_name');
+const cardLink = document.querySelector('.popup__input_card_link');
+
+function showPopupCard() { // Открываем и закрываем  попап
+    popupCard.classList.toggle('popup_opened');
+}
+
+popupCardOpened.addEventListener('click', showPopupCard);
+popupClosed[1].addEventListener('click', showPopupCard);
+
 
 // Переменные для добавления начальных карточек
 
