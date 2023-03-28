@@ -1,3 +1,57 @@
+document.addEventListener('DOMContentLoaded', addCards);
+
+
+// Переменные и логика для добавления начальных карточек
+
+const templateParent = document.querySelector('.elements__list'); 
+const templateCard = document.getElementById('element').content;
+
+const initElements = [
+    {
+        title: 'Индонезия',
+        link: './images/indonesia.jpg',
+        alt: 'Вид на рисовые поля на Бали'
+    },
+    {
+        title: 'Исландия',
+        link: './images/iceland.jpg',
+        alt: 'Вид на водопад Деттифосс'
+    },
+    {
+        title: 'Франция',
+        link: './images/france.jpg',
+        alt: 'Вид на Эйфелеву башню сковзь деревья'
+    },
+    {
+        title: 'Калифорния',
+        link: './images/california.jpg',
+        alt: 'Вид на мост Золотые ворота в тумане'
+    },
+    {
+        title: 'Таиланд',
+        link: './images/thailand.jpg',
+        alt: 'Вид на храм Ват Ронг Кхун в Чианграе'
+    },
+    {
+        title: 'Вьетнам',
+        link: './images/vietnam.jpg',
+        alt: 'Вид на закатное небо через кокосовые пальмы'
+    },
+]
+
+function addCards() {
+    for (let index = 0; index < initElements.length; index++) {// Цикл для добавления карточек из template
+        const cloneElement = templateCard.querySelector('.element').cloneNode(true);
+    
+        cloneElement.querySelector('.element__image').src = initElements[index].link;
+        cloneElement.querySelector('.element__image').alt = initElements[index].alt;
+        cloneElement.querySelector('.element__title').textContent = initElements[index].title;
+    
+        templateParent.appendChild(cloneElement);
+    }
+}
+
+
 //Общие переменные для попапов
 
 const popupClosed = document.querySelectorAll('.popup__close');
@@ -41,8 +95,9 @@ function changeProfile(event) { //Сохраняем изменения в пр�
 
 const popupCard = document.querySelector('.popup_type_add');
 const popupCardOpened = document.querySelector('.profile__add-element');
-const cardName = document.querySelector('.popup__input_card_name');
-const cardLink = document.querySelector('.popup__input_card_link');
+const cardName = popupForm[1].querySelector('.popup__input_card_name');
+const cardLink = popupForm[1].querySelector('.popup__input_card_link');
+
 
 function showPopupCard() { // Открываем и закрываем  попап
     popupCard.classList.toggle('popup_opened');
@@ -51,51 +106,18 @@ function showPopupCard() { // Открываем и закрываем  попа
 popupCardOpened.addEventListener('click', showPopupCard);
 popupClosed[1].addEventListener('click', showPopupCard);
 
+function addNewCard(event) { // Добавляем карточку
+    event.preventDefault();
 
-// Переменные для добавления начальных карточек
+    const newCard = {};
+    newCard.title = cardName.value;
+    newCard.src = cardLink.value;
+    newCard.alt = `Изображение ${newCard.title}`;
 
-const templateParent = document.querySelector('.elements__list'); 
-const templateCard = document.getElementById('element').content;
-
-const initElements = [
-    {
-        title: 'Индонезия',
-        link: './images/indonesia.jpg',
-        alt: 'Вид на рисовые поля на Бали'
-    },
-    {
-        title: 'Исландия',
-        link: './images/iceland.jpg',
-        alt: 'Вид на водопад Деттифосс'
-    },
-    {
-        title: 'Франция',
-        link: './images/france.jpg',
-        alt: 'Вид на Эйфелеву башню сковзь деревья'
-    },
-    {
-        title: 'Калифорния',
-        link: './images/california.jpg',
-        alt: 'Вид на мост Золотые ворота в тумане'
-    },
-    {
-        title: 'Таиланд',
-        link: './images/thailand.jpg',
-        alt: 'Вид на храм Ват Ронг Кхун в Чианграе'
-    },
-    {
-        title: 'Вьетнам',
-        link: './images/vietnam.jpg',
-        alt: 'Вид на закатное небо через кокосовые пальмы'
-    },
-]
-
-for (let index = 0; index < initElements.length; index++) {// Цикл для добавления карточек из template
-    const cloneElement = templateCard.querySelector('.element').cloneNode(true);
-
-    cloneElement.querySelector('.element__image').src = initElements[index].link;
-    cloneElement.querySelector('.element__image').alt = initElements[index].alt;
-    cloneElement.querySelector('.element__title').textContent = initElements[index].title;
-
-    templateParent.appendChild(cloneElement);
+    initElements.unshift(newCard);    
+    addCards();
+    showPopupCard();
 }
+
+popupForm[1].addEventListener('submit', addNewCard); // Сохраняем изменения
+
