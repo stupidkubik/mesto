@@ -1,6 +1,3 @@
-document.addEventListener('DOMContentLoaded', addCards);
-
-
 // Переменные и логика для добавления начальных карточек
 
 const templateParent = document.querySelector('.elements__list'); 
@@ -39,17 +36,24 @@ const initElements = [
     },
 ]
 
-function addCards() {
-    for (let index = 0; index < initElements.length; index++) {// Цикл для добавления карточек из template
-        const cloneElement = templateCard.querySelector('.element').cloneNode(true);
+function addCards(item) {
+    const cloneElement = templateCard.querySelector('.element').cloneNode(true);
     
-        cloneElement.querySelector('.element__image').src = initElements[index].link;
-        cloneElement.querySelector('.element__image').alt = initElements[index].alt;
-        cloneElement.querySelector('.element__title').textContent = initElements[index].title;
-    
-        templateParent.appendChild(cloneElement);
-    }
+    cloneElement.querySelector('.element__image').src = item.link;
+    cloneElement.querySelector('.element__image').alt = item.alt;
+    cloneElement.querySelector('.element__title').textContent = item.title;
+
+    const elementLike = cloneElement.querySelector('.element__like-icon'); //Добавляем слушатель лайка
+    elementLike.addEventListener('click', (evt) => {
+    evt.target.classList.toggle('element__like-icon_active');
+    });
+
+    templateParent.prepend(cloneElement);
 }
+
+document.addEventListener('DOMContentLoaded', initElements.forEach((item) => {
+    addCards(item); 
+}));
 
 
 //Общие переменные для попапов
@@ -98,7 +102,6 @@ const popupCardOpened = document.querySelector('.profile__add-element');
 const cardName = popupForm[1].querySelector('.popup__input_card_name');
 const cardLink = popupForm[1].querySelector('.popup__input_card_link');
 
-
 function showPopupCard() { // Открываем и закрываем  попап
     popupCard.classList.toggle('popup_opened');
 }
@@ -111,11 +114,12 @@ function addNewCard(event) { // Добавляем карточку
 
     const newCard = {};
     newCard.title = cardName.value;
-    newCard.src = cardLink.value;
+    newCard.link = cardLink.value;
     newCard.alt = `Изображение ${newCard.title}`;
 
-    initElements.unshift(newCard);    
-    addCards();
+    initElements.push(newCard);// Добавляем объект в массив
+    addCards(initElements[initElements.length - 1]);// Генерируем новую карточку
+
     showPopupCard();
 }
 
