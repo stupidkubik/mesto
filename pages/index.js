@@ -2,6 +2,8 @@
 
 const templateParent = document.querySelector('.elements__list'); 
 const templateCard = document.getElementById('element').content;
+let deleteButton = document.querySelectorAll('.element__trash-icon');
+console.log(deleteButton);
 
 const initElements = [
     {
@@ -49,9 +51,12 @@ function addCards(item) {
     });
 
     templateParent.prepend(cloneElement);
+
+    deleteButton = document.querySelectorAll('.element__trash-icon');//Обновляем нодлист
+    console.log(deleteButton);
 }
 
-document.addEventListener('DOMContentLoaded', initElements.forEach((item) => {
+document.addEventListener('DOMContentLoaded', initElements.forEach(item => {
     addCards(item); 
 }));
 
@@ -125,3 +130,13 @@ function addNewCard(event) { // Добавляем карточку
 
 popupForm[1].addEventListener('submit', addNewCard); // Сохраняем изменения
 
+
+// Переменные и логика для кнопки удаления карточки
+
+
+deleteButton.forEach(item => {
+    item.addEventListener('click', evt => {
+        const deleteItem = evt.target.parentElement;
+        deleteItem.remove();
+    })
+});
