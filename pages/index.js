@@ -38,7 +38,7 @@ const initElements = [
     },
 ]
 
-function addCards(item) {
+function addCards(item) {// Общая функция добавления карточки
     const cloneElement = templateCard.querySelector('.element').cloneNode(true);
     
     cloneElement.querySelector('.element__image').src = item.link;
@@ -46,14 +46,19 @@ function addCards(item) {
     cloneElement.querySelector('.element__title').textContent = item.title;
 
     const elementLike = cloneElement.querySelector('.element__like-icon'); //Добавляем слушатель лайка
-    elementLike.addEventListener('click', (evt) => {
+    elementLike.addEventListener('click', evt => {
     evt.target.classList.toggle('element__like-icon_active');
+    });
+
+    const elementDelete = cloneElement.querySelector('.element__trash-icon'); //Добавляем слушатель корзины
+    elementDelete.addEventListener('click', evt => {
+        const deleteItem = evt.target.parentElement;
+        deleteItem.remove();
     });
 
     templateParent.prepend(cloneElement);
 
     deleteButton = document.querySelectorAll('.element__trash-icon');//Обновляем нодлист
-    console.log(deleteButton);
 }
 
 document.addEventListener('DOMContentLoaded', initElements.forEach(item => {
@@ -104,8 +109,8 @@ function changeProfile(event) { //Сохраняем изменения в пр�
 
 const popupCard = document.querySelector('.popup_type_add');
 const popupCardOpened = document.querySelector('.profile__add-element');
-const cardName = popupForm[1].querySelector('.popup__input_card_name');
-const cardLink = popupForm[1].querySelector('.popup__input_card_link');
+const popupCardName = popupForm[1].querySelector('.popup__input_card_name');
+const popupCardLink = popupForm[1].querySelector('.popup__input_card_link');
 
 function showPopupCard() { // Открываем и закрываем  попап
     popupCard.classList.toggle('popup_opened');
@@ -118,8 +123,8 @@ function addNewCard(event) { // Добавляем карточку
     event.preventDefault();
 
     const newCard = {};
-    newCard.title = cardName.value;
-    newCard.link = cardLink.value;
+    newCard.title = popupCardName.value;
+    newCard.link = popupCardLink.value;
     newCard.alt = `Изображение ${newCard.title}`;
 
     initElements.push(newCard);// Добавляем объект в массив
@@ -131,12 +136,18 @@ function addNewCard(event) { // Добавляем карточку
 popupForm[1].addEventListener('submit', addNewCard); // Сохраняем изменения
 
 
-// Переменные и логика для кнопки удаления карточки
+// Переменные и логика для попапа просмотра
 
+const popupGallery = document.querySelector('.popup_type_gallery');
+const popupGalleryOpened = document.querySelector('.element__container');
+const popupGalleryImage = document.querySelector('.popup__gallery');
+const popupGalleryDescription = document.querySelector('.popup__description');
 
-deleteButton.forEach(item => {
-    item.addEventListener('click', evt => {
-        const deleteItem = evt.target.parentElement;
-        deleteItem.remove();
-    })
-});
+function showPopupGallery() {
+    popupGallery.classList.toggle('popup_opened'); 
+}
+
+popupGalleryOpened.addEventListener('click', showPopupGallery);
+popupClosed[2].addEventListener('click', showPopupGallery);
+
+// Переписать попапы на таргет
