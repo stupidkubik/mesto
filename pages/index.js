@@ -98,8 +98,8 @@ const popupCardForm = popupCard.querySelector('.popup__form');
 
 const profileName = document.querySelector('.profile__name');
 const profileCaption = document.querySelector('.profile__caption');
-const popupProfileName = document.querySelector('.popup__input_profile_name');
-const popupProfileCaption = document.querySelector('.popup__input_profile_caption');
+const popupProfileName = popupProfileForm.querySelector('.popup__input_profile_name');
+const popupProfileCaption = popupProfileForm.querySelector('.popup__input_profile_caption');
 
 popupProfileName.value = profileName.textContent;
 popupProfileCaption.value = profileCaption.textContent;
@@ -149,7 +149,6 @@ function closePopup(popup) { // Закрываем попап
 }
 
 popupProfileOpened.addEventListener('click', () => openPopup(popupProfile));
-
 popupCardOpened.addEventListener('click', () => openPopup(popupCard));
 
 popups.forEach(item => {
