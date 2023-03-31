@@ -1,7 +1,0 @@
-.element__container {
-    display: block;    
-}
-
-.element__container:hover {
-    cursor: pointer;
-}
