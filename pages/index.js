@@ -126,7 +126,7 @@ function closePopupWithEsc(evt, popup) { // Закрываем попап по �
 
 function closePopupWithOverlay(evt) { // Закрываем попап по клику на оверлэй
     if(evt.target === evt.currentTarget) {
-        closePopup(evt.currentTarget); 
+        closePopup(evt.currentTarget);
     }
 }
 
@@ -151,6 +151,5 @@ popupCardOpened.addEventListener('click', () => {
 popups.forEach(item => {
     const popupButton = item.querySelector('.popup__close');
     popupButton.addEventListener('click', () => closePopup(item));
-
     item.addEventListener('click', closePopupWithOverlay);
 });

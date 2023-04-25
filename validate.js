@@ -73,9 +73,9 @@ function setInputValidity(config, form) { // Запускаем проверку
 }
 
 function enableValidation(config) { // Запускаем валидацию в формах
-  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  const formsList = Array.from(document.querySelectorAll(config.formSelector));
 
-  formList.forEach(formElement => {
+  formsList.forEach(formElement => {
     setInputValidity(config, formElement);
     setFormValidity(config, formElement);
   });
