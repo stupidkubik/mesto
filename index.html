@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Место</title>
         <link rel="stylesheet" href="./pages/index.css">
+        <script src="./validate.js" defer type="module"></script>
         <script src="./pages/index.js" defer type="module"></script>
-        <script src="./validate.js" defer></script>
     </head>
 
     <body class="page">
@@ -52,21 +52,33 @@
 
                 <button class="popup__close" type="button" aria-label="Закрыть окно"></button>
 
-                <form class="popup__form" name="profile-form">
+                <form class="popup__form" name="profile-form" novalidate>
                     
                     <input 
+                    id="profile-name" 
                     class="popup__input popup__input_profile_name" 
                     type="text" 
                     name="profile-name" 
                     value="" 
-                    placeholder="Введите своё имя">
+                    placeholder="Введите своё имя" 
+                    minlength="2" 
+                    maxlength="40" 
+                    required>
+
+                    <span id="error-profile-name" class="popup__error">Вы пропустили это поле</span>
 
                     <input 
+                    id="profile-caption" 
                     class="popup__input popup__input_profile_caption" 
                     type="text" 
                     name="profile-caption" 
                     value="" 
-                    placeholder="Опишите себя">
+                    placeholder="Опишите себя" 
+                    minlength="2" 
+                    maxlength="200" 
+                    required>
+
+                    <span id="error-profile-caption" class="popup__error">Вы пропустили это поле</span>
 
                     <button class="popup__submit" type="submit">Сохранить</button>
                 </form>
@@ -80,21 +92,31 @@
 
                 <button class="popup__close" type="button" aria-label="Закрыть окно"></button>
 
-                <form class="popup__form" name="add-form">
+                <form class="popup__form" name="add-form" novalidate>
                     
                     <input 
+                    id="card-name" 
                     class="popup__input popup__input_card_name" 
                     type="text" 
                     name="card-name" 
                     value="" 
-                    placeholder="Название">
+                    placeholder="Название" 
+                    minlength="2" 
+                    maxlength="30" 
+                    required>
+
+                    <span id="error-card-name" class="popup__error">Вы пропустили это поле</span>
 
                     <input 
+                    id="card-link" 
                     class="popup__input popup__input_card_link" 
-                    type="text" 
+                    type="url" 
                     name="card-link" 
                     value="" 
-                    placeholder="Ссылка на картинку">
+                    placeholder="Ссылка на картинку" 
+                    required>
+
+                    <span id="error-card-link" class="popup__error">Вы пропустили это поле</span>
 
                     <button class="popup__submit" type="submit">Создать</button>
                 </form>
@@ -104,7 +126,7 @@
 
         <div class="popup popup_type_image">
             <div class="popup__image-box">
-                <img class="popup__image" src="null" alt="">
+                <img class="popup__image" src="" alt="">
                 <h2 class="popup__description"></h2>
                 <button class="popup__close" type="button" aria-label="Закрыть окно"></button>
             </div>

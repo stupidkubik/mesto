@@ -1,4 +1,37 @@
-import { initElements } from "../constants.js";
+// import { initElements } from "../constants.js";
+const initElements = [
+    {
+        title: 'Индонезия',
+        link: './images/indonesia.jpg',
+        alt: 'Вид на рисовые поля на Бали'
+    },
+    {
+        title: 'Исландия',
+        link: './images/iceland.jpg',
+        alt: 'Вид на водопад Деттифосс'
+    },
+    {
+        title: 'Франция',
+        link: './images/france.jpg',
+        alt: 'Вид на Эйфелеву башню сковзь деревья'
+    },
+    {
+        title: 'Калифорния',
+        link: './images/california.jpg',
+        alt: 'Вид на мост Золотые ворота в тумане'
+    },
+    {
+        title: 'Таиланд',
+        link: './images/thailand.jpg',
+        alt: 'Вид на храм Ват Ронг Кхун в Чианграе'
+    },
+    {
+        title: 'Вьетнам',
+        link: './images/vietnam.jpg',
+        alt: 'Вид на закатное небо через кокосовые пальмы'
+    },
+]
+
 
 // Переменные для добавления начальных карточек
 
@@ -92,10 +125,16 @@ function addNewCard(event) { // Добавляем карточку
 
 function openPopup(popup) { // Открываем попап
     popup.classList.add('popup_opened');
+    document.addEventListener('keydown', evt => {
+        closePopupWithEsc(evt, popup);
+    });
 }
 
 function closePopup(popup) { // Закрываем попап
     popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', evt => {
+        closePopupWithEsc(evt, popup);
+    });
 }
 
 function showPopupImage(item) {// Функция открытия попапа просмотра
@@ -114,17 +153,34 @@ initElements.forEach(item => {// Перебор массива
 popupProfileForm.addEventListener('submit', evt => changeProfile(evt)); // Сохраняем изменения
 
 popupCardForm.addEventListener('submit', evt => addNewCard(evt)); // Сохраняем изменения
-popupCardForm.addEventListener('reset', evt => closePopup(evt)); // Сбрасываем карточку при закрытии окна
+// popupCardForm.addEventListener('reset', evt => closePopup(evt)); // Сбрасываем карточку при закрытии окна
 
 popupProfileOpened.addEventListener('click', () => {
+    checkValidityError(popupProfileForm);
+    
     popupProfileName.value = profileName.textContent;
     popupProfileCaption.value = profileCaption.textContent;
     openPopup(popupProfile);
 });
 
-popupCardOpened.addEventListener('click', () => openPopup(popupCard));
+popupCardOpened.addEventListener('click', () => {
+    checkValidityError(popupCardForm);
+    openPopup(popupCard);
+});
 
 popups.forEach(item => {
     const popupButton = item.querySelector('.popup__close');
     popupButton.addEventListener('click', () => closePopup(item));
 });
+
+function closePopupWithEsc(evt, popup) {
+ if(evt.key === 'Escape') {
+    popup.classList.remove('popup_opened'); 
+ }
+}
+
+function closePopupWithOverlay(evt) {
+    if(evt.target === evt.currentTarget) {
+        closePopup(evt.currentTarget); 
+    }
+}// добавить
