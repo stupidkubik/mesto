@@ -1,37 +1,5 @@
-// import { initElements } from "../constants.js";
-const initElements = [
-    {
-        title: 'Индонезия',
-        link: './images/indonesia.jpg',
-        alt: 'Вид на рисовые поля на Бали'
-    },
-    {
-        title: 'Исландия',
-        link: './images/iceland.jpg',
-        alt: 'Вид на водопад Деттифосс'
-    },
-    {
-        title: 'Франция',
-        link: './images/france.jpg',
-        alt: 'Вид на Эйфелеву башню сковзь деревья'
-    },
-    {
-        title: 'Калифорния',
-        link: './images/california.jpg',
-        alt: 'Вид на мост Золотые ворота в тумане'
-    },
-    {
-        title: 'Таиланд',
-        link: './images/thailand.jpg',
-        alt: 'Вид на храм Ват Ронг Кхун в Чианграе'
-    },
-    {
-        title: 'Вьетнам',
-        link: './images/vietnam.jpg',
-        alt: 'Вид на закатное небо через кокосовые пальмы'
-    },
-]
-
+import { initElements } from "../constants.js";
+import { checkValidityError } from "../validate.js";
 
 // Переменные для добавления начальных карточек
 
@@ -72,7 +40,7 @@ const popupCardLink = popupCardForm.querySelector('.popup__input_card_link');
 const showImage = popupImage.querySelector('.popup__image');
 const showImageDescription = popupImage.querySelector('.popup__description');
 
-function createCard(item) {// Функция сбора карточки
+function createCard(item) { // Функция сбора карточки
     const cloneElement = templateCard.querySelector('.element').cloneNode(true);
     const cloneElementImage = cloneElement.querySelector('.element__image');
     
@@ -98,11 +66,11 @@ function createCard(item) {// Функция сбора карточки
     return cloneElement;
 }
 
-function renderCards(param) {//Функция добавления карточки
+function renderCards(param) { // Функция добавления карточки
     templateParent.prepend(param);
 }
 
-function changeProfile(evt) { //Сохраняем изменения в профиле
+function changeProfile(evt) { // Сохраняем изменения в профиле
     evt.preventDefault();
     profileName.textContent = popupProfileName.value;
     profileCaption.textContent = popupProfileCaption.value;
@@ -137,7 +105,7 @@ function closePopup(popup) { // Закрываем попап
     });
 }
 
-function showPopupImage(item) {// Функция открытия попапа просмотра
+function showPopupImage(item) { // Функция открытия попапа просмотра
     openPopup(popupImage);
 
     showImage.src = item.src;
@@ -145,15 +113,26 @@ function showPopupImage(item) {// Функция открытия попапа �
     showImageDescription.textContent = item.nextElementSibling.textContent;
 }
 
-initElements.forEach(item => {// Перебор массива
+initElements.forEach(item => { // Перебор массива
     const createNewCard = createCard(item);
     renderCards(createNewCard);
 });
 
+function closePopupWithEsc(evt, popup) { // Закрываем попап по нажатию на Esc
+    if(evt.key === 'Escape') {
+       popup.classList.remove('popup_opened'); 
+    }
+}
+
+function closePopupWithOverlay(evt) { // Закрываем попап по клику на оверлэй
+    if(evt.target === evt.currentTarget) {
+        closePopup(evt.currentTarget); 
+    }
+}
+
 popupProfileForm.addEventListener('submit', evt => changeProfile(evt)); // Сохраняем изменения
 
 popupCardForm.addEventListener('submit', evt => addNewCard(evt)); // Сохраняем изменения
-// popupCardForm.addEventListener('reset', evt => closePopup(evt)); // Сбрасываем карточку при закрытии окна
 
 popupProfileOpened.addEventListener('click', () => {
     checkValidityError(popupProfileForm);
@@ -165,22 +144,13 @@ popupProfileOpened.addEventListener('click', () => {
 
 popupCardOpened.addEventListener('click', () => {
     checkValidityError(popupCardForm);
+    popupCardForm.reset();
     openPopup(popupCard);
 });
 
 popups.forEach(item => {
     const popupButton = item.querySelector('.popup__close');
     popupButton.addEventListener('click', () => closePopup(item));
+
+    item.addEventListener('click', closePopupWithOverlay);
 });
-
-function closePopupWithEsc(evt, popup) {
- if(evt.key === 'Escape') {
-    popup.classList.remove('popup_opened'); 
- }
-}
-
-function closePopupWithOverlay(evt) {
-    if(evt.target === evt.currentTarget) {
-        closePopup(evt.currentTarget); 
-    }
-}// добавить

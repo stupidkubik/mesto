@@ -1,30 +1,28 @@
-// import { validationConfig } from "./constants.js"
+import { validationConfig } from "./constants.js"
 
-const validationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-}; // { 1, 2, ...restObj }
+export function checkValidityError(form) { // Сбрасываем форму при закрытии попапа
+  form.querySelectorAll(validationConfig.inputSelector).forEach(input => {
+    const errorElement = document.querySelector(`#error-${input.id}`);
 
+    if(!input.checkValidity()) {
+      setInputValid(validationConfig, input, errorElement);
+    }
+  });
+}
 
-
-
-function setInputValid(config, input, errorElement) {
+function setInputValid(config, input, errorElement) { // Меняем инпут на валидный
   input.classList.remove(config.inputErrorClass);
   errorElement.classList.remove(config.errorClass);
   errorElement.textContent = '';
 };
 
-function setInputInvalid(config, input, errorElement) {
+function setInputInvalid(config, input, errorElement) { // Меняем инпут на инвалидный
   input.classList.add(config.inputErrorClass);
   errorElement.classList.add(config.errorClass);
   errorElement.textContent = input.validationMessage;
 };
 
-function checkInputValidity(config, input) {
+function checkInputValidity(config, input) { // Проверяем валидность инпута
   const errorElement = document.querySelector(`#error-${input.id}`);
 
   if(input.checkValidity()) {
@@ -34,17 +32,17 @@ function checkInputValidity(config, input) {
   }
 };
 
-function enableButton(config, submitButton) {
+function enableButton(config, submitButton) { // Включаем кнопку в форме
   submitButton.classList.remove(config.inactiveButtonClass);
   submitButton.removeAttribute('disabled');
 };
 
-function disableButton(config, submitButton) {
+export function disableButton(config, submitButton) { // Выключаем кнопку в форме
   submitButton.classList.add(config.inactiveButtonClass);
   submitButton.setAttribute('disabled', '');
 };
 
-function checkButtonValidity(config, form) {
+function checkButtonValidity(config, form) { // Проверяем валидность формы и меняем статус кнопки
   const submitButton = form.querySelector(config.submitButtonSelector);
 
   if(form.checkValidity()) {
@@ -54,18 +52,18 @@ function checkButtonValidity(config, form) {
   }
 };
 
-function setFormValidity(config, formElement) {
+function setFormValidity(config, formElement) { // Устанавливаем начальный статус формы
   formElement.addEventListener('submit', evt => {
     evt.preventDefault();
     checkButtonValidity(config, formElement);
   });
 }
 
-function setInputValidity(config, form) {
+function setInputValidity(config, form) { // Запускаем проверку инпутов при вводе данных
   const inputsList = Array.from(form.querySelectorAll(config.inputSelector));
   
   inputsList.forEach(input => {
-    checkButtonValidity(config, form);// хз, что делать или начальный
+    checkButtonValidity(config, form);
 
     input.addEventListener('input', () => {
       checkButtonValidity(config, form);
@@ -74,7 +72,7 @@ function setInputValidity(config, form) {
   });
 }
 
-function enableValidation(config) {
+function enableValidation(config) { // Запускаем валидацию в формах
   const formList = Array.from(document.querySelectorAll(config.formSelector));
 
   formList.forEach(formElement => {
@@ -84,13 +82,3 @@ function enableValidation(config) {
 };
 
 enableValidation(validationConfig);
-
-function checkValidityError(form) {
-  form.querySelectorAll(validationConfig.inputSelector).forEach(input => {
-    const errorElement = document.querySelector(`#error-${input.id}`);
-
-    if(!input.checkValidity()) {
-      setInputValid(validationConfig, input, errorElement);
-    }
-  });
-}
