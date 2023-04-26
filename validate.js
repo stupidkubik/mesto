@@ -10,6 +10,11 @@ export function checkValidityError(form) { // Сбрасываем форму п
   });
 }
 
+export function setButtonDisabled(submitButton) {
+  submitButton.classList.add(validationConfig.inactiveButtonClass);
+  submitButton.setAttribute('disabled', ''); 
+}
+
 function setInputValid(config, input, errorElement) { // Меняем инпут на валидный
   input.classList.remove(config.inputErrorClass);
   errorElement.classList.remove(config.errorClass);
@@ -37,7 +42,7 @@ function enableButton(config, submitButton) { // Включаем кнопку �
   submitButton.removeAttribute('disabled');
 };
 
-export function disableButton(config, submitButton) { // Выключаем кнопку в форме
+function disableButton(config, submitButton) { // Выключаем кнопку в форме
   submitButton.classList.add(config.inactiveButtonClass);
   submitButton.setAttribute('disabled', '');
 };

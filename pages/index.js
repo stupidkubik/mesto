@@ -1,5 +1,7 @@
 import { initElements } from "../constants.js";
+import { validationConfig } from "../constants.js";
 import { checkValidityError } from "../validate.js";
+import { setButtonDisabled } from "../validate.js";
 
 // Переменные для добавления начальных карточек
 
@@ -93,16 +95,12 @@ function addNewCard(event) { // Добавляем карточку
 
 function openPopup(popup) { // Открываем попап
     popup.classList.add('popup_opened');
-    document.addEventListener('keydown', evt => {
-        closePopupWithEsc(evt, popup);
-    });
+    document.addEventListener('keydown', closePopupWithEsc);
 }
 
 function closePopup(popup) { // Закрываем попап
     popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', evt => {
-        closePopupWithEsc(evt, popup);
-    });
+    document.removeEventListener('keydown', closePopupWithEsc);
 }
 
 function showPopupImage(item) { // Функция открытия попапа просмотра
@@ -118,9 +116,9 @@ initElements.forEach(item => { // Перебор массива
     renderCards(createNewCard);
 });
 
-function closePopupWithEsc(evt, popup) { // Закрываем попап по нажатию на Esc
+function closePopupWithEsc(evt) { // Закрываем попап по нажатию на Esc
     if(evt.key === 'Escape') {
-       popup.classList.remove('popup_opened'); 
+        closePopup(document.querySelector('.popup_opened'));
     }
 }
 
@@ -136,6 +134,7 @@ popupCardForm.addEventListener('submit', evt => addNewCard(evt)); // Сохра�
 
 popupProfileOpened.addEventListener('click', () => {
     checkValidityError(popupProfileForm);
+    setButtonDisabled(popupProfileForm.querySelector(validationConfig.submitButtonSelector));
     
     popupProfileName.value = profileName.textContent;
     popupProfileCaption.value = profileCaption.textContent;
@@ -144,6 +143,8 @@ popupProfileOpened.addEventListener('click', () => {
 
 popupCardOpened.addEventListener('click', () => {
     checkValidityError(popupCardForm);
+    setButtonDisabled(popupCardForm.querySelector(validationConfig.submitButtonSelector));
+    
     popupCardForm.reset();
     openPopup(popupCard);
 });
