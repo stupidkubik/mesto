@@ -1,33 +1,27 @@
 export const initElements = [
     {
-        title: 'Индонезия',
+        name: 'Индонезия',
         link: './images/indonesia.jpg',
-        alt: 'Вид на рисовые поля на Бали'
     },
     {
-        title: 'Исландия',
+        name: 'Исландия',
         link: './images/iceland.jpg',
-        alt: 'Вид на водопад Деттифосс'
     },
     {
-        title: 'Франция',
+        name: 'Франция',
         link: './images/france.jpg',
-        alt: 'Вид на Эйфелеву башню сковзь деревья'
     },
     {
-        title: 'Калифорния',
+        name: 'Калифорния',
         link: './images/california.jpg',
-        alt: 'Вид на мост Золотые ворота в тумане'
     },
     {
-        title: 'Таиланд',
+        name: 'Таиланд',
         link: './images/thailand.jpg',
-        alt: 'Вид на храм Ват Ронг Кхун в Чианграе'
     },
     {
-        title: 'Вьетнам',
+        name: 'Вьетнам',
         link: './images/vietnam.jpg',
-        alt: 'Вид на закатное небо через кокосовые пальмы'
     },
 ]
 

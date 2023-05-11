@@ -4,8 +4,8 @@ export class Card {
         this._templateSelector = templateSelector;
         this._showPopupImage = showPopupImage;
         this._src = card.link;
-        this._alt = card.alt;
-        this._title = card.title;
+        this._name = card.name;
+        this._alt = card.name;
     }
 
     _cloneTemplate() {
@@ -22,6 +22,7 @@ export class Card {
 
     _deleteCard = () => {
         this._clone.remove();
+        this._clone = null;
     }
 
     _setEventListeners() { //Добавляем слушатели лайка, удаления и просмотра
@@ -37,11 +38,11 @@ export class Card {
         this._clone = this._cloneTemplate();
 
         this._cardImage = this._clone.querySelector('.element__image');
-        this._cardTitle = this._clone.querySelector('.element__title');
+        this._cardName = this._clone.querySelector('.element__title');
 
         this._cardImage.src = this._src;
         this._cardImage.alt = this._alt;
-        this._cardTitle.textContent = this._title;
+        this._cardName.textContent = this._name;
 
         this._setEventListeners();
         

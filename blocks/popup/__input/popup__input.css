@@ -8,7 +8,3 @@
     border: none;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
 }
-
-.popup__input:last-of-type {
-    margin: 10px 0 0;
-}

@@ -1,6 +1,6 @@
 import { initElements, validationConfig } from "../scripts/constants.js";
-import { checkValidityError, setButtonDisabled } from "../scripts/validate.js";
 import { Card } from "../scripts/Card.js";
+import { FormValidator } from "../scripts/FormValidator.js";
 
 // Темплейт
 
@@ -41,6 +41,14 @@ const popupCardLink = popupCardForm.querySelector('.popup__input_card_link');
 const showImage = popupImage.querySelector('.popup__image');
 const showImageDescription = popupImage.querySelector('.popup__description');
 
+// Запускаем валидацию
+
+const popupProfileFormValidator = new FormValidator(validationConfig, popupProfileForm); 
+const popupCardFormValidator = new FormValidator(validationConfig, popupCardForm);
+
+popupProfileFormValidator.enableValidation();
+popupCardFormValidator.enableValidation();
+
 function renderCards(card) { // Верстаем карточки
     templateParent.prepend(card);
 }
@@ -56,9 +64,8 @@ function addNewCard(event) { // Добавляем новую карточку
     event.preventDefault();
 
     const card = {};
-    card.title = popupCardName.value;
+    card.name = popupCardName.value;
     card.link = popupCardLink.value;
-    card.alt = `Изображение ${card.title}`;
 
     const newCard = new Card(card, templateSelector, showPopupImage);
 
@@ -82,7 +89,7 @@ function showPopupImage(item) { // Открываем окно просмотр�
     openPopup(popupImage);
 
     showImage.src = item.src;
-    showImage.alt = item.alt;
+    showImage.alt = item.name;
     showImageDescription.textContent = item.nextElementSibling.textContent;
 }
 
@@ -98,33 +105,37 @@ function closePopupWithOverlay(evt) { // Закрываем попап по кл
     }
 }
 
+function handlePopupProfile() { // Обрабатываем открытие попапа
+    popupProfileFormValidator.checkValidityError();
+    popupProfileFormValidator.setButtonDisabled();
+    
+    popupProfileName.value = profileName.textContent;
+    popupProfileCaption.value = profileCaption.textContent;
+    openPopup(popupProfile);
+}
+
+function handlePopupCard() { // Обрабатываем открытие другого попапа
+    popupCardFormValidator.checkValidityError();
+    popupCardFormValidator.setButtonDisabled();
+    
+    popupCardForm.reset();
+    openPopup(popupCard);
+}
+
 // Обрабатываем слушатели
 
 popupProfileForm.addEventListener('submit', (evt) => changeProfile(evt));
 
 popupCardForm.addEventListener('submit', (evt) => addNewCard(evt));
 
-popupProfileOpened.addEventListener('click', () => {
-    checkValidityError(popupProfileForm);
-    setButtonDisabled(popupProfileForm.querySelector(validationConfig.submitButtonSelector));
-    
-    popupProfileName.value = profileName.textContent;
-    popupProfileCaption.value = profileCaption.textContent;
-    openPopup(popupProfile);
-});
+popupProfileOpened.addEventListener('click', handlePopupProfile);
 
-popupCardOpened.addEventListener('click', () => {
-    checkValidityError(popupCardForm);
-    setButtonDisabled(popupCardForm.querySelector(validationConfig.submitButtonSelector));
-    
-    popupCardForm.reset();
-    openPopup(popupCard);
-});
+popupCardOpened.addEventListener('click', handlePopupCard);
 
 popups.forEach(item => {
     const popupButton = item.querySelector('.popup__close');
     popupButton.addEventListener('click', () => closePopup(item));
-    item.addEventListener('click', closePopupWithOverlay);
+    item.addEventListener('mousedown', closePopupWithOverlay);
 });
 
 // Перебираем входящий массив карточек
