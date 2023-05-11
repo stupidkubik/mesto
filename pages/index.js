@@ -2,12 +2,12 @@ import { initElements, validationConfig } from "../scripts/constants.js";
 import { checkValidityError, setButtonDisabled } from "../scripts/validate.js";
 import { Card } from "../scripts/Card.js";
 
-// Переменные для добавления начальных карточек
+// Темплейт
 
 const templateParent = document.querySelector('.elements__list'); 
 const templateSelector = 'element';
 
-// Кнопки для попапов
+// Кнопки открытия попапов
 
 const popupProfileOpened = document.querySelector('.profile__edit');
 const popupCardOpened = document.querySelector('.profile__add-element');
@@ -24,24 +24,24 @@ const popupImage = document.querySelector('.popup_type_image');
 const popupProfileForm = popupProfile.querySelector('.popup__form');
 const popupCardForm = popupCard.querySelector('.popup__form');
 
-// Переменные для попапа с профилем
+// Переменные профиля
 
 const profileName = document.querySelector('.profile__name');
 const profileCaption = document.querySelector('.profile__caption');
 const popupProfileName = popupProfileForm.querySelector('.popup__input_profile_name');
 const popupProfileCaption = popupProfileForm.querySelector('.popup__input_profile_caption');
 
-// Переменные для попапа с добавлением карточек
+// Переменные добавления карточек
 
 const popupCardName = popupCardForm.querySelector('.popup__input_card_name');
 const popupCardLink = popupCardForm.querySelector('.popup__input_card_link');
 
-// Переменные для попапа просмотра карточек
+// Переменные окна просмотра
 
 const showImage = popupImage.querySelector('.popup__image');
 const showImageDescription = popupImage.querySelector('.popup__description');
 
-function renderCards(card) { // Функция добавления карточки
+function renderCards(card) { // Верстаем карточки
     templateParent.prepend(card);
 }
 
@@ -52,7 +52,7 @@ function changeProfile(evt) { // Сохраняем изменения в про
     closePopup(popupProfile);
 }
 
-function addNewCard(event) { // Добавляем карточку
+function addNewCard(event) { // Добавляем новую карточку
     event.preventDefault();
 
     const card = {};
@@ -62,7 +62,7 @@ function addNewCard(event) { // Добавляем карточку
 
     const newCard = new Card(card, templateSelector, showPopupImage);
 
-    renderCards(newCard.createCard()); // Генерируем новую карточку
+    renderCards(newCard.createCard());
     closePopup(popupCard);
 
     popupCardForm.reset();
@@ -78,7 +78,7 @@ function closePopup(popup) { // Закрываем попап
     document.removeEventListener('keydown', closePopupWithEsc);
 }
 
-function showPopupImage(item) { // Функция открытия попапа просмотра
+function showPopupImage(item) { // Открываем окно просмотра
     openPopup(popupImage);
 
     showImage.src = item.src;
@@ -98,9 +98,11 @@ function closePopupWithOverlay(evt) { // Закрываем попап по кл
     }
 }
 
-popupProfileForm.addEventListener('submit', (evt) => changeProfile(evt)); // Сохраняем изменения
+// Обрабатываем слушатели
 
-popupCardForm.addEventListener('submit', (evt) => addNewCard(evt)); // Сохраняем изменения
+popupProfileForm.addEventListener('submit', (evt) => changeProfile(evt));
+
+popupCardForm.addEventListener('submit', (evt) => addNewCard(evt));
 
 popupProfileOpened.addEventListener('click', () => {
     checkValidityError(popupProfileForm);
@@ -125,7 +127,9 @@ popups.forEach(item => {
     item.addEventListener('click', closePopupWithOverlay);
 });
 
-initElements.forEach(card => { // Перебор массива
+// Перебираем входящий массив карточек
+
+initElements.forEach(card => {
     const newCard = new Card(card, templateSelector, showPopupImage);
     renderCards(newCard.createCard());
 });

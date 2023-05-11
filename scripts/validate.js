@@ -13,20 +13,16 @@ export function checkValidityError(form) { // Сбрасываем форму п
   });
 }
 
-export function setButtonDisabled(submitButton) {
+export function setButtonDisabled(submitButton) { // Выключаем кнопку при открытии попапа
   submitButton.classList.add(validationConfig.inactiveButtonClass);
   submitButton.setAttribute('disabled', ''); 
 }
 
-function enableValidation(config) {
+(function enableValidation(config) { // Запускаяем валидацию на формах
   const formsList = Array.from(document.querySelectorAll(config.formSelector));
   
   formsList.forEach(formElement => {
     const formValidation = new FormValidator(config, formElement);
-
-    formValidation.setInputValidity();
-    formValidation.setFormValidity();
+    formValidation.enableValidation()
   });
-}
-
-enableValidation(validationConfig);
+})(validationConfig);
