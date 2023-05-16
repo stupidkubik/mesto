@@ -1,0 +1,11 @@
+{
+  "name": "mesto",
+  "version": "1.0.0",
+  "description": "project 'Mesto'",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf dist && webpack"
+  },
+  "author": "Evgenii Rubin",
+  "license": "ISC"
+}
