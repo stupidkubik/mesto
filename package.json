@@ -4,8 +4,9 @@
   "description": "project 'Mesto'",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && webpack"
-  },
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
+  }, 
   "author": "Evgenii Rubin",
   "license": "ISC"
 }
