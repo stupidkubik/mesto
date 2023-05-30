@@ -1,27 +1,34 @@
+import californiaImage from '../images/california.jpg';
+import franceImage from '../images/france.jpg';
+import icelandImage from '../images/iceland.jpg';
+import indonesiaImage from '../images/indonesia.jpg';
+import thailandImage from '../images/thailand.jpg';
+import vietnamImage from '../images/vietnam.jpg';
+
 export const initElements = [
     {
         name: 'Индонезия',
-        link: './images/indonesia.jpg',
+        link: indonesiaImage,
     },
     {
         name: 'Исландия',
-        link: './images/iceland.jpg',
+        link: icelandImage,
     },
     {
         name: 'Франция',
-        link: './images/france.jpg',
+        link: franceImage,
     },
     {
         name: 'Калифорния',
-        link: './images/california.jpg',
+        link: californiaImage,
     },
     {
         name: 'Таиланд',
-        link: './images/thailand.jpg',
+        link: thailandImage,
     },
     {
         name: 'Вьетнам',
-        link: './images/vietnam.jpg',
+        link: vietnamImage,
     },
 ]
 
@@ -33,7 +40,3 @@ export const validationConfig = {
     inputErrorClass: 'popup__input_type_error',
     errorClass: 'popup__error_visible'
 };
-
-// export const templateConfig = {
-
-// }
