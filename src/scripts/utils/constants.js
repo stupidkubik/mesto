@@ -1,9 +1,9 @@
-import californiaImage from '../images/california.jpg';
-import franceImage from '../images/france.jpg';
-import icelandImage from '../images/iceland.jpg';
-import indonesiaImage from '../images/indonesia.jpg';
-import thailandImage from '../images/thailand.jpg';
-import vietnamImage from '../images/vietnam.jpg';
+import californiaImage from '../../images/california.jpg';
+import franceImage from '../../images/france.jpg';
+import icelandImage from '../../images/iceland.jpg';
+import indonesiaImage from '../../images/indonesia.jpg';
+import thailandImage from '../../images/thailand.jpg';
+import vietnamImage from '../../images/vietnam.jpg';
 
 export const initElements = [
     {
