@@ -20,45 +20,12 @@ import { FormValidator } from "./scripts/components/FormValidator.js";
 import { Section } from './scripts/utils/Section.js';
 import { PopupWithImage } from './scripts/components/PopupWithImage.js';
 import { PopupWithForm } from './scripts/components/PopupWithForm.js';
-import { UserInfo } from './scripts/UserInfo.js';
-
-// Темплейт
-
-// const templateParent = document.querySelector('.elements__list'); 
-// const templateSelector = 'element';
+import { UserInfo } from './scripts/components/UserInfo.js';
 
 // Кнопки открытия попапов
 
 const popupProfileOpened = document.querySelector('.profile__edit');
 const popupCardOpened = document.querySelector('.profile__add-element');
-
-// Попапы
-
-// const popups = document.querySelectorAll('.popup');
-// const popupProfile = document.querySelector('.popup_type_profile');
-// const popupCard = document.querySelector('.popup_type_add');
-// const popupImage = document.querySelector('.popup_type_image');
-
-// Формы
-
-// const popupProfileForm = popupProfile.querySelector('.popup__form');
-// const popupCardForm = popupCard.querySelector('.popup__form');
-
-// Переменные профиля
-
-// Переменные добавления карточек
-
-// const popupCardName = popupCardForm.querySelector('.popup__input_card_name');
-// const popupCardLink = popupCardForm.querySelector('.popup__input_card_link');
-
-// Переменные окна просмотра
-
-// const showImage = popupImage.querySelector('.popup__image');
-// const showImageDescription = popupImage.querySelector('.popup__description');
-
-
-
-
 
 
 // Запускаем валидацию
@@ -74,28 +41,23 @@ const popupImage = new PopupWithImage('.popup_type_image');
 const cardsList = new Section({
     items: initElements,
     renderer: (cardItem) => {
-        const newCard = new Card(cardItem, 'element', popupImage.openPopup(cardItem));
+        const newCard = new Card(cardItem, 'element', (card) => {
+            popupImage.openPopup(card);
+        });
         return newCard.createCard(); 
     }}, '.elements__list' 
 );
 
 cardsList.renderItems();
 
-const userInfo = new UserInfo({ title: '.popup__input_profile_name', caption: '.popup__input_profile_caption' })
+const userInfo = new UserInfo({ "title": '.profile__name', "caption": '.profile__caption' })
 
-const popupProfile = new PopupWithForm('.popup_type_profile', () => {
-    userInfo.setUserInfo();
-    popupProfile.closePopup();
+const popupProfile = new PopupWithForm('.popup_type_profile', (element) => {
+    userInfo.setUserInfo(element);
 });
 
-const popupCard = new PopupWithForm('.popup_type_add', (evt) => {
-    evt.preventDefault();
-    cardsList
-    .addItem(cardsList
-    .renderer(popupCard
-    .getInputValues()))
-
-    popupCard.closePopup();
+const popupCard = new PopupWithForm('.popup_type_add', (element) => {
+    cardsList.addItem(element);
 });
 
 userInfo.getUserInfo();
@@ -113,7 +75,6 @@ function handlePopupProfile() { // Обрабатываем открытие п�
 function handlePopupCard() { // Обрабатываем открытие другого попапа
     // popupCardFormValidator.checkValidityError();
     // popupCardFormValidator.setButtonDisabled();
-    
     popupCard.openPopup();
 }
 
