@@ -31,4 +31,3 @@ export class Popup {
         this._popup.addEventListener('mousedown', this._closePopupWithOverlay);
     }
 }
-
