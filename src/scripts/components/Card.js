@@ -3,9 +3,6 @@ export class Card {
         this._card = card;
         this._templateSelector = templateSelector;
         this._handleCardClick = handleCardClick;
-        this._src = card.link;
-        this._title = card.title;
-        this._alt = card.title;
     }
 
     _cloneTemplate() {
@@ -40,9 +37,9 @@ export class Card {
         this._cardImage = this._clone.querySelector('.element__image');
         this._cardTitle = this._clone.querySelector('.element__title');
 
-        this._cardImage.src = this._src;
-        this._cardImage.alt = this._alt;
-        this._cardTitle.textContent = this._title;
+        this._cardImage.src = this._card.link;
+        this._cardImage.alt = this._card.title;
+        this._cardTitle.textContent = this._card.title;
 
         this._setEventListeners();
         

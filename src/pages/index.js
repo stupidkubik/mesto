@@ -24,8 +24,8 @@ import { UserInfo } from '../scripts/components/UserInfo.js';
 
 // Ищем кнопки открытия попапов
 
-const popupProfileOpened = document.querySelector('.profile__edit');
-const popupCardOpened = document.querySelector('.profile__add-element');
+const popupProfileOpenButton = document.querySelector('.profile__edit');
+const popupCardOpenButton = document.querySelector('.profile__add-element');
 
 // Запускаем валидацию
 
@@ -43,7 +43,7 @@ const cardsList = new Section({
     items: initElements,
     renderer: (cardItem) => {
         const newCard = new Card(cardItem, 'element', (card) => {
-            popupImage.openPopup(card);
+            popupImage.open(card);
         });
         return newCard.createCard(); 
     }}, '.elements__list' 
@@ -53,35 +53,32 @@ cardsList.renderItems(); // Рендерим изначальный массив
 
 const userInfo = new UserInfo({ "title": '.profile__name', "caption": '.profile__caption' })
 
-const popupProfile = new PopupWithForm('.popup_type_profile', (element) => {
-    userInfo.setUserInfo(element);
+const popupProfile = new PopupWithForm('.popup_type_profile', (inputValues) => {
+    userInfo.setUserInfo(inputValues);
 }, () => popupProfileFormValidator.checkValidityError());
 
-const popupCard = new PopupWithForm('.popup_type_add', (element) => {
-    cardsList.addItem(element);
+const popupCard = new PopupWithForm('.popup_type_add', (inputValues) => {
+    cardsList.addItem(inputValues);
 }, () => popupCardFormValidator.checkValidityError());
 
 // Добавил проверку валидации на закрытие попапа, чтобы убрать спан с ошибкой
 
-userInfo.getUserInfo();
 popupImage.setEventListeners();
 popupProfile.setEventListeners();
 popupCard.setEventListeners();
 
 function handlePopupProfile() { // Обрабатываем открытие попапа профиля
-    popupProfileFormValidator.checkValidityError();
     popupProfileFormValidator.setButtonDisabled(); 
     popupProfile.setInputValues(userInfo.getUserInfo());
-    popupProfile.openPopup();
+    popupProfile.open();
 }
 
 function handlePopupCard() { // Обрабатываем открытие попапа карточки
-    popupCardFormValidator.checkValidityError();
     popupCardFormValidator.setButtonDisabled();
-    popupCard.openPopup();
+    popupCard.open();
 }
 
 // Добавляем обработчики открытия попапов
 
-popupProfileOpened.addEventListener('click', handlePopupProfile);
-popupCardOpened.addEventListener('click', handlePopupCard);
+popupProfileOpenButton.addEventListener('click', handlePopupProfile);
+popupCardOpenButton.addEventListener('click', handlePopupCard);
