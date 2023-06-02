@@ -51,14 +51,14 @@ const cardsList = new Section({
 
 cardsList.renderItems(); // Рендерим изначальный массив карточек
 
-const userInfo = new UserInfo({ "title": '.profile__name', "caption": '.profile__caption' })
+const userInfo = new UserInfo({ titleSelector: '.profile__name', captionSelector: '.profile__caption' })
 
 const popupProfile = new PopupWithForm('.popup_type_profile', (inputValues) => {
     userInfo.setUserInfo(inputValues);
 }, () => popupProfileFormValidator.checkValidityError());
 
 const popupCard = new PopupWithForm('.popup_type_add', (inputValues) => {
-    cardsList.addItem(inputValues);
+    cardsList.renderCard(inputValues);
 }, () => popupCardFormValidator.checkValidityError());
 
 // Добавил проверку валидации на закрытие попапа, чтобы убрать спан с ошибкой
