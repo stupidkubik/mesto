@@ -19,9 +19,14 @@
             <section class="profile">
 
                 <div class="profile__item">
-                    <img class="profile__avatar" 
-                    src="<%=require('./images/profile__avatar.jpg')%>" 
-                    alt="фотография Жак-Ива Кусто">
+
+                    <button class="profile__avatar-edit" 
+                    type="button" 
+                    aria-label="редактировать аватар">
+                        <img class="profile__avatar" 
+                        src="<%=require('./images/profile__avatar.jpg')%>" 
+                        alt="Аватар профиля">
+                    </button>
                     
                     <div class="profile__info">
                         <div class="profile__name-item">
@@ -147,9 +152,12 @@
                 <div class="element__name">
                     <h2 class="element__title"></h2>
                     
-                    <button class="element__like-icon" 
-                    type="button" 
-                    aria-label="поставить лайк"></button>
+                    <div class="element__like-box">
+                        <button class="element__like-icon" 
+                        type="button" 
+                        aria-label="поставить лайк"></button>
+                        <div class="element__like-count">0</div>
+                    </div>
                 </div>
                 
                 <button class="element__trash-icon" 
