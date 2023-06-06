@@ -21,26 +21,31 @@ import { Section } from '../scripts/components/Section.js';
 import { PopupWithImage } from '../scripts/components/PopupWithImage.js';
 import { PopupWithForm } from '../scripts/components/PopupWithForm.js';
 import { UserInfo } from '../scripts/components/UserInfo.js';
+import { PopupWithConfirmation } from '../scripts/components/PopupWithConfirmation.js';
+import { Api } from '../scripts/components/Api.js';
 
 // Ищем кнопки открытия попапов
 
 const popupProfileOpenButton = document.querySelector('.profile__edit');
 const popupCardOpenButton = document.querySelector('.profile__add-element');
+const popupAvatarOpenButton = document.querySelector('.profile__avatar-edit');
 
 // Запускаем валидацию
 
 const popupProfileFormValidator = new FormValidator(validationConfig, '.popup__form_profile');
 const popupCardFormValidator = new FormValidator(validationConfig, '.popup__form_card');
+const popupAvatarFormValidator = new FormValidator(validationConfig, '.popup__form_avatar')
 
 popupProfileFormValidator.enableValidation();
 popupCardFormValidator.enableValidation();
+popupAvatarFormValidator.enableValidation();
 
 // Создаем экземпляры классов
 
 const popupImage = new PopupWithImage('.popup_type_image');
 
 const cardsList = new Section({
-    items: initElements,
+    items: [],   // initElements
     renderer: (cardItem) => {
         const newCard = new Card(cardItem, 'element', (card) => {
             popupImage.open(card);
@@ -61,11 +66,16 @@ const popupCard = new PopupWithForm('.popup_type_add', (inputValues) => {
     cardsList.renderCard(inputValues);
 }, () => popupCardFormValidator.checkValidityError());
 
+const popupAvatar = new PopupWithForm('.popup_type_avatar', () => {
+
+}, () => popupAvatarFormValidator.checkValidityError());
+
 // Добавил проверку валидации на закрытие попапа, чтобы убрать спан с ошибкой
 
 popupImage.setEventListeners();
 popupProfile.setEventListeners();
 popupCard.setEventListeners();
+popupAvatar.setEventListeners();
 
 function handlePopupProfile() { // Обрабатываем открытие попапа профиля
     popupProfileFormValidator.setButtonDisabled(); 
@@ -78,7 +88,23 @@ function handlePopupCard() { // Обрабатываем открытие поп
     popupCard.open();
 }
 
+function handlePopupAvatar() { // Обрабатываем открытие попапа с аватаром
+    popupAvatarFormValidator.setButtonDisabled();
+    popupAvatar.open()
+}
 // Добавляем обработчики открытия попапов
 
 popupProfileOpenButton.addEventListener('click', handlePopupProfile);
 popupCardOpenButton.addEventListener('click', handlePopupCard);
+popupAvatarOpenButton.addEventListener('click', handlePopupAvatar);
+
+const api = new Api( { myToken: 'cad6e116-edab-4c4b-8149-8b724d78ff63' } );
+
+Api.getCards()
+.then((cards) => {
+    cards.forEach((card) => cardsList.renderCard(card));
+});
+
+console.log();
+
+Api.getId();

@@ -7,27 +7,27 @@ import vietnamImage from '../../images/vietnam.jpg';
 
 export const initElements = [
     {
-        title: 'Индонезия',
+        name: 'Индонезия',
         link: indonesiaImage,
     },
     {
-        title: 'Исландия',
+        name: 'Исландия',
         link: icelandImage,
     },
     {
-        title: 'Франция',
+        name: 'Франция',
         link: franceImage,
     },
     {
-        title: 'Калифорния',
+        name: 'Калифорния',
         link: californiaImage,
     },
     {
-        title: 'Таиланд',
+        name: 'Таиланд',
         link: thailandImage,
     },
     {
-        title: 'Вьетнам',
+        name: 'Вьетнам',
         link: vietnamImage,
     },
 ]

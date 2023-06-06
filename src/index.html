@@ -145,6 +145,45 @@
             </div>
         </div>
 
+        <div class="popup popup_type_avatar">
+            <div class="popup__container">
+                <h2 class="popup__title">Обновить аватар</h2>
+
+                <button class="popup__close" 
+                type="button" 
+                aria-label="Закрыть окно"></button>
+
+                <form class="popup__form popup__form_avatar" name="avatar-form" novalidate>
+                    
+                    <input 
+                    id="avatar-link" 
+                    class="popup__input popup__input_avatar_link" 
+                    type="url" 
+                    name="link" 
+                    placeholder="Ссылка на новый аватар" 
+                    required>
+
+                    <span id="error-avatar-link" class="popup__error"></span>
+
+                    <button class="popup__submit" type="submit">Сохранить</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="popup popup_type_delete-confirmation">
+            <div class="popup__container">
+                <h2 class="popup__title">Вы уверены?</h2>
+
+                <button class="popup__close" 
+                type="button" 
+                aria-label="Закрыть окно"></button>
+
+                <form class="popup__form popup__form_avatar" name="avatar-form" novalidate>
+                    <button class="popup__submit" type="submit">Да</button>
+                </form>
+            </div> 
+        </div>
+
         <template id="element">
             <li class="element">
                 <img class="element__image" src="#" alt="">

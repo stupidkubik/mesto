@@ -38,8 +38,8 @@ export class Card {
         this._cardTitle = this._clone.querySelector('.element__title');
 
         this._cardImage.src = this._card.link;
-        this._cardImage.alt = this._card.title;
-        this._cardTitle.textContent = this._card.title;
+        this._cardImage.alt = this._card.name;
+        this._cardTitle.textContent = this._card.name;
 
         this._setEventListeners();
         
