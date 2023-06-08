@@ -157,9 +157,9 @@
                     
                     <input 
                     id="avatar-link" 
-                    class="popup__input popup__input_avatar_link" 
+                    class="popup__input popup__input_avatar-link" 
                     type="url" 
-                    name="link" 
+                    name="avatar" 
                     placeholder="Ссылка на новый аватар" 
                     required>
 
@@ -170,7 +170,7 @@
             </div>
         </div>
 
-        <div class="popup popup_type_delete-confirmation">
+        <div class="popup popup_type_delete">
             <div class="popup__container">
                 <h2 class="popup__title">Вы уверены?</h2>
 
@@ -178,7 +178,7 @@
                 type="button" 
                 aria-label="Закрыть окно"></button>
 
-                <form class="popup__form popup__form_avatar" name="avatar-form" novalidate>
+                <form class="popup__form popup__form_delete" name="delete-form" novalidate>
                     <button class="popup__submit" type="submit">Да</button>
                 </form>
             </div> 

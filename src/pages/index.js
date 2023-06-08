@@ -34,7 +34,7 @@ const popupAvatarOpenButton = document.querySelector('.profile__avatar-edit');
 
 const popupProfileFormValidator = new FormValidator(validationConfig, '.popup__form_profile');
 const popupCardFormValidator = new FormValidator(validationConfig, '.popup__form_card');
-const popupAvatarFormValidator = new FormValidator(validationConfig, '.popup__form_avatar')
+const popupAvatarFormValidator = new FormValidator(validationConfig, '.popup__form_avatar');
 
 popupProfileFormValidator.enableValidation();
 popupCardFormValidator.enableValidation();
@@ -42,15 +42,20 @@ popupAvatarFormValidator.enableValidation();
 
 // Создаем экземпляры классов
 
+const popupDelete = new PopupWithConfirmation('.popup_type_delete', (card) => {
+    card.deleteCard();
+    popupDelete.close();
+});
+
 const popupImage = new PopupWithImage('.popup_type_image');
 
 const cardsList = new Section({
     items: [],   // initElements
     renderer: (cardItem) => {
-        const newCard = new Card(cardItem, 'element', (card) => {
+        const newCard = new Card(cardItem, 'element', popupDelete, (card) => {
             popupImage.open(card);
         });
-        return newCard.createCard(); 
+        return newCard.createCard();
     }}, '.elements__list' 
 );
 
@@ -66,9 +71,11 @@ const popupCard = new PopupWithForm('.popup_type_add', (inputValues) => {
     cardsList.renderCard(inputValues);
 }, () => popupCardFormValidator.checkValidityError());
 
-const popupAvatar = new PopupWithForm('.popup_type_avatar', () => {
-
+const popupAvatar = new PopupWithForm('.popup_type_avatar', (inputValue) => {
+    document.querySelector('.profile__avatar').src = inputValue.avatar;
 }, () => popupAvatarFormValidator.checkValidityError());
+
+
 
 // Добавил проверку валидации на закрытие попапа, чтобы убрать спан с ошибкой
 
@@ -76,6 +83,7 @@ popupImage.setEventListeners();
 popupProfile.setEventListeners();
 popupCard.setEventListeners();
 popupAvatar.setEventListeners();
+popupDelete.setEventListeners();
 
 function handlePopupProfile() { // Обрабатываем открытие попапа профиля
     popupProfileFormValidator.setButtonDisabled(); 
@@ -98,13 +106,19 @@ popupProfileOpenButton.addEventListener('click', handlePopupProfile);
 popupCardOpenButton.addEventListener('click', handlePopupCard);
 popupAvatarOpenButton.addEventListener('click', handlePopupAvatar);
 
-const api = new Api( { myToken: 'cad6e116-edab-4c4b-8149-8b724d78ff63' } );
+const api = new Api( {
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-68',
+    headers: {
+        authorization: 'cad6e116-edab-4c4b-8149-8b724d78ff63',
+        'Content-Type': 'application/json' 
+    }
+} );
 
-Api.getCards()
+api.getCards()
 .then((cards) => {
     cards.forEach((card) => cardsList.renderCard(card));
 });
 
 console.log();
 
-Api.getId();
+api.getId();

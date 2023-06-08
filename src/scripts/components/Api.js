@@ -1,47 +1,40 @@
 export class Api {
-    constructor( { myToken } ) {
-        this._myToken = myToken;
-        console.log(this._myToken);
+    constructor( { baseUrl, headers } ) {
+        this._baseUrl = baseUrl;
+        this._headers = headers;      
     }
 
-    static async getCards() {
+    async getCards() {
         try {
-            const cardsData = await fetch('https://mesto.nomoreparties.co/v1/cohort-68/cards', {
+            const cardsData = await fetch(`${this._baseUrl}/cards`, {
                 method: 'GET',
-                headers: {
-                    authorization: 'cad6e116-edab-4c4b-8149-8b724d78ff63' // this._myToken
-                }
+                headers: this._headers
             });
             return await cardsData.json();
         }
         catch(err) {
-            console.error('Ошибка получения карточек: ', err);
+            console.error(err);
         }
     }
 
-    static async getId() {
+    async getId() {
         try {
-            const idData = await fetch('https://mesto.nomoreparties.co/v1/cohort-68/users/me', {
+            const idData = await fetch(`${this._baseUrl}/users/me`, {
                 method: 'GET',
-                headers: {
-                    authorization: 'cad6e116-edab-4c4b-8149-8b724d78ff63'
-                }
+                headers: this._headers
             });
             return await idData.json();
         }
         catch(err) {
-            console.error('Ошибка запроса ID: ', err);
+            console.error(err);
         }
     }
 
     static async postCard(cardData) {
         try {
-            const newCardData = await fetch('https://mesto.nomoreparties.co/v1/cohort-68/cards', {
+            const newCardData = await fetch(`${this._baseUrl}/cards`, {
                 method: 'POST',
-                headers: {
-                    authorization: 'cad6e116-edab-4c4b-8149-8b724d78ff63', // this._myToken
-                    'Content-Type': 'application/json'
-                },
+                headers: this._headers,
                 body: JSON.stringify({
                     name: cardData,
                     link: cardData
@@ -50,18 +43,15 @@ export class Api {
             return await newCardData.json();
         }
         catch(err) {
-            console.error('Ошибка добавления карточки: ', err);
+            console.log(err);
         }
     } 
 
     static async updateProfile(inputValue) {
         try {
-            const newProfileData = await fetch('https://mesto.nomoreparties.co/v1/cohort-68/users/me', {
+            const newProfileData = await fetch(`${this._baseUrl}/users/me`, {
                 method: 'PATCH',
-                headers: {
-                    authorization: 'cad6e116-edab-4c4b-8149-8b724d78ff63',
-                    'Content-Type': 'application/json'
-                },
+                headers: this._headers,
                 body: JSON.stringify({
                     name: inputValue,
                     about: inputValue
@@ -71,18 +61,15 @@ export class Api {
 
         }
         catch(err) {
-            console.error(err);
+            console.log(err);
         }
     }
 
     static async updateAvatar(inputValue) {
         try {
-            const newAvatar = await fetch('https://mesto.nomoreparties.co/v1/cohort-68/users/me/avatar', {
+            const newAvatar = await fetch(`${this._baseUrl}/users/me/avatar`, {
                 method: 'PATCH',
-                headers: {
-                    authorization: 'cad6e116-edab-4c4b-8149-8b724d78ff63',
-                    'Content-Type': 'application/json'
-                },
+                headers: this._headers,
                 body: JSON.stringify({
                     avatar: inputValue 
                   })
@@ -91,39 +78,35 @@ export class Api {
 
         }
         catch(err) {
-            console.error(err);
+            console.log(err);
         }
     }
 
     static async putLike(cardId) {
         try {
-            const countLike = await fetch(`https://mesto.nomoreparties.co/v1/cohort-68/cards/${cardId}/likes`, {
+            const countLike = await fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
                 method: 'PUT',
-                headers: {
-                    authorization: 'cad6e116-edab-4c4b-8149-8b724d78ff63',
-                }
+                headers: this._headers
             });
             return await countLike.json();
 
         }
         catch(err) {
-            console.error(err);
+            console.log(err);
         } 
     }
 
     static async deleteLike(cardId) {
         try {
-            const countLike = await fetch(`https://mesto.nomoreparties.co/v1/cohort-68/cards/${cardId}/likes`, {
+            const countLike = await fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
                 method: 'DELETE',
-                headers: {
-                    authorization: 'cad6e116-edab-4c4b-8149-8b724d78ff63',
-                }
+                headers: this._headers
             });
             return await countLike.json();
 
         }
         catch(err) {
-            console.error(err);
+            console.log(err);
         } 
     } 
 }

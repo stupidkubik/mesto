@@ -1,8 +1,10 @@
 export class Card {
-    constructor(card, templateSelector, handleCardClick) {
+    constructor(card, templateSelector, openDeletePopup, handleCardClick) {
         this._card = card;
         this._templateSelector = templateSelector;
+        this._openDeletePopup = openDeletePopup.open;
         this._handleCardClick = handleCardClick;
+        console.log(this._openDeletePopup);
     }
 
     _cloneTemplate() {
@@ -17,9 +19,9 @@ export class Card {
         this._like.classList.toggle('element__like-icon_active');
     }
 
-    _deleteCard = () => {
-        this._clone.remove();
-        this._clone = null;
+    _handleDeleteCard() {
+        console.log(this._openDeletePopup);
+        this._openDeletePopup(this.deleteCard); 
     }
 
     _setEventListeners() {
@@ -27,7 +29,7 @@ export class Card {
         this._trash = this._clone.querySelector('.element__trash-icon');
 
         this._like.addEventListener('click', this._addLike);
-        this._trash.addEventListener('click', this._deleteCard);
+        this._trash.addEventListener('click', this._handleDeleteCard);
         this._cardImage.addEventListener('click', () => this._handleCardClick(this._cardImage));
     }
 
@@ -44,5 +46,10 @@ export class Card {
         this._setEventListeners();
         
         return this._clone;
+    }
+
+    deleteCard = () => {
+        this._clone.remove();
+        this._clone = null;
     }
 }
