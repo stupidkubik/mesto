@@ -50,21 +50,28 @@ const popupDelete = new PopupWithConfirmation('.popup_type_delete', (card) => {
 const popupImage = new PopupWithImage('.popup_type_image');
 
 const cardsList = new Section({
-    items: [],   // initElements
+    // items: [],   // initElements
     renderer: (cardItem) => {
-        const newCard = new Card(cardItem, 'element', popupDelete, (card) => {
+        const newCard = new Card(cardItem, 'element', popupDelete, myId, (card) => {
             popupImage.open(card);
         });
         return newCard.createCard();
     }}, '.elements__list' 
 );
 
-cardsList.renderItems(); // Рендерим изначальный массив карточек
+// cardsList.renderItems(); // Рендерим изначальный массив карточек
 
-const userInfo = new UserInfo({ titleSelector: '.profile__name', captionSelector: '.profile__caption' })
+const userInfo = new UserInfo( { 
+    titleSelector: '.profile__name', 
+    captionSelector: '.profile__caption', 
+    avatarSelector: '.profile__avatar' 
+} )
 
 const popupProfile = new PopupWithForm('.popup_type_profile', (inputValues) => {
-    userInfo.setUserInfo(inputValues);
+    api.updateProfile(inputValues)
+    .then((info) => {
+        userInfo.setUserInfo(info);
+    })
 }, () => popupProfileFormValidator.checkValidityError());
 
 const popupCard = new PopupWithForm('.popup_type_add', (inputValues) => {
@@ -72,10 +79,12 @@ const popupCard = new PopupWithForm('.popup_type_add', (inputValues) => {
 }, () => popupCardFormValidator.checkValidityError());
 
 const popupAvatar = new PopupWithForm('.popup_type_avatar', (inputValue) => {
-    document.querySelector('.profile__avatar').src = inputValue.avatar;
+    api.updateAvatar(inputValue)
+    .then((info) => {
+        console.log(info.avatar);
+        document.querySelector('.profile__avatar').src = info.avatar;
+    })
 }, () => popupAvatarFormValidator.checkValidityError());
-
-
 
 // Добавил проверку валидации на закрытие попапа, чтобы убрать спан с ошибкой
 
@@ -119,6 +128,11 @@ api.getCards()
     cards.forEach((card) => cardsList.renderCard(card));
 });
 
-console.log();
+let myId = {};
 
-api.getId();
+api.getId()
+.then((user) => {
+    userInfo.setUserInfo(user);
+    myId = user;
+    console.log(myId);
+})
