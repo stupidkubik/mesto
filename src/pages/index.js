@@ -42,24 +42,60 @@ popupAvatarFormValidator.enableValidation();
 
 // Создаем экземпляры классов
 
-const popupDelete = new PopupWithConfirmation('.popup_type_delete', (card) => {
-    card.deleteCard();
+const api = new Api( {
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-68',
+    headers: {
+        authorization: 'cad6e116-edab-4c4b-8149-8b724d78ff63',
+        'Content-Type': 'application/json' 
+    }
+} );
+
+api.getCards()
+.then((cards) => {
+    cards.reverse().forEach((card) => cardsList.renderCard(card));
+});
+
+let myId = {};
+
+api.getId()
+.then((user) => {
+    userInfo.setUserInfo(user);
+    myId = user;
+})
+
+//
+
+const popupDelete = new PopupWithConfirmation('.popup_type_delete', async (cardElement, card) => {
+    await api.deleteCard(card._id);
+    cardElement.deleteCard();
     popupDelete.close();
 });
 
 const popupImage = new PopupWithImage('.popup_type_image');
 
-const cardsList = new Section({
-    // items: [],   // initElements
-    renderer: (cardItem) => {
-        const newCard = new Card(cardItem, 'element', popupDelete, myId, (card) => {
+const cardsList = new Section('.elements__list', (cardItem) => {
+        const newCard = new Card(
+            cardItem, 
+            'element', 
+            popupDelete, 
+            myId, 
+            (card) => {
             popupImage.open(card);
-        });
+            }, 
+            async (boolean, card) => {
+                try {
+                    if(boolean) {
+                        return await api.putLike(card._id);
+                    } else {
+                        return await api.deleteLike(card._id);
+                    }
+                } catch(err) {
+                    console.log(err);
+                }
+            }
+        );
         return newCard.createCard();
-    }}, '.elements__list' 
-);
-
-// cardsList.renderItems(); // Рендерим изначальный массив карточек
+    });
 
 const userInfo = new UserInfo( { 
     titleSelector: '.profile__name', 
@@ -75,13 +111,15 @@ const popupProfile = new PopupWithForm('.popup_type_profile', (inputValues) => {
 }, () => popupProfileFormValidator.checkValidityError());
 
 const popupCard = new PopupWithForm('.popup_type_add', (inputValues) => {
-    cardsList.renderCard(inputValues);
+    api.postCard(inputValues)
+    .then((card) => {
+        cardsList.renderCard(card);
+    })
 }, () => popupCardFormValidator.checkValidityError());
 
 const popupAvatar = new PopupWithForm('.popup_type_avatar', (inputValue) => {
     api.updateAvatar(inputValue)
     .then((info) => {
-        console.log(info.avatar);
         document.querySelector('.profile__avatar').src = info.avatar;
     })
 }, () => popupAvatarFormValidator.checkValidityError());
@@ -115,24 +153,9 @@ popupProfileOpenButton.addEventListener('click', handlePopupProfile);
 popupCardOpenButton.addEventListener('click', handlePopupCard);
 popupAvatarOpenButton.addEventListener('click', handlePopupAvatar);
 
-const api = new Api( {
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-68',
-    headers: {
-        authorization: 'cad6e116-edab-4c4b-8149-8b724d78ff63',
-        'Content-Type': 'application/json' 
-    }
-} );
-
-api.getCards()
-.then((cards) => {
-    cards.forEach((card) => cardsList.renderCard(card));
-});
-
-let myId = {};
-
-api.getId()
-.then((user) => {
-    userInfo.setUserInfo(user);
-    myId = user;
-    console.log(myId);
-})
+// for(let i = 0; i < 30; i++) {
+//     api.postCard({ title: 'Yandex.Praktikum', link: 'https://picsum.photos/800/800' })
+//     .then((card) => {
+//         cardsList.renderCard(card);
+//     }) 
+// } 

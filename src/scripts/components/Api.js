@@ -2,19 +2,16 @@ export class Api {
     constructor( { baseUrl, headers } ) {
         this._baseUrl = baseUrl;
         this._headers = headers;
-        // this._headersToken = headers.authorization;
     }
-
+// Обновить ошибки
     async getId() {
         try {
             const idData = await fetch(`${this._baseUrl}/users/me`, {
                 method: 'GET',
                 headers: this._headers
             });
-            
             return await idData.json();
-        }
-        catch(err) {
+        } catch(err) {
             console.log(err);
         }
     }
@@ -26,8 +23,7 @@ export class Api {
                 headers: this._headers
             });
             return await cardsData.json();
-        }
-        catch(err) {
+        } catch(err) {
             console.log(err);
         }
     }
@@ -38,13 +34,12 @@ export class Api {
                 method: 'POST',
                 headers: this._headers,
                 body: JSON.stringify({
-                    name: cardData,
-                    link: cardData
+                    name: cardData.title,
+                    link: cardData.link
                   })
             });
             return await newCardData.json();
-        }
-        catch(err) {
+        } catch(err) {
             console.log(err);
         }
     } 
@@ -60,9 +55,7 @@ export class Api {
                   })
             });
             return await newProfileData.json();
-
-        }
-        catch(err) {
+        } catch(err) {
             console.log(err);
         }
     }
@@ -77,9 +70,7 @@ export class Api {
                   })
             });
             return await newAvatar.json();
-
-        }
-        catch(err) {
+        } catch(err) {
             console.log(err);
         }
     }
@@ -91,9 +82,7 @@ export class Api {
                 headers: this._headers
             });
             return await countLike.json();
-
-        }
-        catch(err) {
+        } catch(err) {
             console.log(err);
         } 
     }
@@ -105,10 +94,20 @@ export class Api {
                 headers: this._headers
             });
             return await countLike.json();
-
-        }
-        catch(err) {
+        } catch(err) {
             console.log(err);
         } 
-    } 
+    }
+    
+    async deleteCard(cardId) {
+        try {
+            const cardDelete = await fetch(`${this._baseUrl}/cards/${cardId}`, {
+                method: 'DELETE',
+                headers: this._headers
+            });
+            return await cardDelete.json();
+        } catch(err) {
+            console.log(err);
+        } 
+    }
 }
