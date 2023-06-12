@@ -1,15 +1,3 @@
-// Импорт изображений
-
-import profileAvatarImage from '../images/profile__avatar.jpg';
-import iconAddLogo from '../images/logo/icon__add-element.svg';
-import iconCloseLogo from '../images/logo/icon-close.svg';
-import iconLikeActiveLogo from '../images/logo/icon-like_active.svg';
-import iconLikeDisabledLogo from '../images/logo/icon-like_disabled.svg';
-import iconPenLogo from '../images/logo/icon-pen.svg';
-import iconTrashLogo from '../images/logo/icon-trash.svg';
-import blackLogo from '../images/logo/logo-black.svg';
-import whiteLogo from '../images/logo/logo-white.svg';
-
 // Подключение файлов стилей и скриптов
 
 import './index.css';
@@ -50,17 +38,16 @@ const api = new Api( {
     }
 });
 
-api.getCards() // Запрашиваем массив карточек с сервера
-.then((cards) => {
+let myId = {}; // Создаем объект для данных профиля
+
+Promise.all([
+    api.getCards(), // Запрашиваем массив карточек с сервера
+    api.getId() // Запрашиваем данные юзера
+])
+.then(([cards, user]) => {
+    myId = user; // наполняем объект свойствами
     cards.reverse().forEach((card) => cardsList.renderCard(card));
-});
-
-let myId = {}; // Создаем объект данных профиля и наполняем его
-
-api.getId()
-.then((user) => {
     userInfo.setUserInfo(user);
-    myId = user;
 })
 
 // Создаем экземпляры классов
@@ -73,29 +60,29 @@ const popupDelete = new PopupWithConfirmation('.popup_type_delete', async (cardE
 
 const popupImage = new PopupWithImage('.popup_type_image');
 
-const cardsList = new Section('.elements__list', (cardItem) => {
-        const newCard = new Card(
-            cardItem, // Элемент карточки 
-            'element', // Селектор контейнера
-            popupDelete, // Попап подтверждения удаления
-            myId, // Объект с моим ID
-            (card) => { // Функция открытия фото в попапе
+const cardObj = { // объект с параметрами создания экземпляров класса Card 
+    templateSelector: 'element',
+    openDeletePopup: popupDelete,
+    handleCardClick: (card) => { // Функция открытия фото в попапе
             popupImage.open(card);
-            }, 
-            async (boolean, card) => { // Функция клика по лайкам
-                try {
-                    if(boolean) {
-                        return await api.putLike(card._id);
-                    } else {
-                        return await api.deleteLike(card._id);
-                    }
-                } catch(err) {
-                    console.log(err);
-                }
+        },
+    handleLike: async (notLiked, card) => { // Функция клика по лайкам
+        try {
+            if(notLiked) {
+                return await api.putLike(card._id);
+            } else {
+                return await api.deleteLike(card._id);
             }
-        );
-        return newCard.createCard();
-    });
+        } catch(err) {
+            console.log(err);
+        }
+    }
+}
+
+const cardsList = new Section('.elements__list', (cardItem) => {
+    const newCard = new Card(cardItem, myId, {cardObj} );
+    return newCard.createCard();
+});
 
 const userInfo = new UserInfo( { 
     titleSelector: '.profile__name', 
@@ -115,7 +102,7 @@ const popupCard = new PopupWithForm('.popup_type_add', async (inputValues) => {
 
 const popupAvatar = new PopupWithForm('.popup_type_avatar', async (inputValue) => {
     const info = await api.updateAvatar(inputValue);
-    document.querySelector('.profile__avatar').src = info.avatar;
+    userInfo.setAvatar(info.avatar);
 }, () => popupAvatarFormValidator.checkValidityError());
 
 // Добавляем слушатели

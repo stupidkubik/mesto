@@ -1,16 +1,11 @@
 export class Card {
-    constructor(card, 
-        templateSelector, 
-        openDeletePopup, 
-        myId, 
-        handleCardClick, 
-        handleLike) {
-        this._card = card;
-        this._templateSelector = templateSelector;
-        this._openDeletePopup = openDeletePopup;
+    constructor(cardItem, myId, { cardObj } ) {
+        this._card = cardItem;
         this._myId = myId._id;
-        this._handleCardClick = handleCardClick;
-        this._handleLike = handleLike;
+        this._templateSelector = cardObj.templateSelector;
+        this._openDeletePopup = cardObj.openDeletePopup;
+        this._handleCardClick = cardObj.handleCardClick;
+        this._handleLike = cardObj.handleLike;
     }
 
     _cloneTemplate() {
@@ -22,23 +17,29 @@ export class Card {
     }
 
     _toggleLike = () => {
-        if (this._like.classList.contains('element__like-icon_active')) {
-            this._like.classList.remove('element__like-icon_active');
-            this._removeLike();
-        } else {
-            this._like.classList.add('element__like-icon_active');
-            this._addLike();
-        }
+        this._like.classList.contains('element__like-icon_active')
+        ? this._removeLike()
+        : this._addLike();
     }
 
     async _addLike() {
-        const newCard = await this._handleLike(true, this._card);
-        this._likesCount.textContent = newCard.likes.length;
+        try {
+            const newCard = await this._handleLike(true, this._card);
+            this._like.classList.add('element__like-icon_active');
+            this._likesCount.textContent = newCard.likes.length;
+        } catch(err) {
+            console.error('Ошибка постановки лайка: ', err);
+        }
     }
 
     async _removeLike() {
-        const newCard = await this._handleLike(false, this._card);
-        this._likesCount.textContent = newCard.likes.length;
+        try {
+            const newCard = await this._handleLike(false, this._card);
+            this._like.classList.remove('element__like-icon_active');
+            this._likesCount.textContent = newCard.likes.length;
+        } catch(err) {
+            console.error('Ошибка удаления лайка: ', err);
+        }
     }
 
     _checkLikeCount() {
@@ -57,6 +58,9 @@ export class Card {
     }
 
     _checkCardOwnerId() {
+        // console.log('my: ', this._myId)
+        // console.log('owner: ', this._card.owner._id)
+
         this._myId === this._card.owner._id
         ? this._trash.style = 'display: block' 
         : this._trash.style = 'display: none';

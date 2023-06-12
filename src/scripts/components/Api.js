@@ -10,9 +10,9 @@ export class Api {
                 method: 'GET',
                 headers: this._headers
             });
-            return await idData.json();
+            return idData.json();
         } catch(err) {
-            console.error('Ошибка получения ID: ',err);
+            console.error('Ошибка получения ID: ', err);
         }
     }
 
@@ -22,9 +22,9 @@ export class Api {
                 method: 'GET',
                 headers: this._headers
             });
-            return await cardsData.json();
+            return cardsData.json();
         } catch(err) {
-            console.error('Ошибка получения списка карточек: ',err);
+            console.error('Ошибка получения списка карточек: ', err);
         }
     }
 
@@ -38,9 +38,9 @@ export class Api {
                     link: cardData.link
                   })
             });
-            return await newCardData.json();
+            return newCardData.json();
         } catch(err) {
-            console.error('Ошибка отправки новой карточки : ',err);
+            console.error('Ошибка отправки новой карточки : ', err);
         }
     } 
 
@@ -54,9 +54,9 @@ export class Api {
                     about: inputValues.caption
                   })
             });
-            return await newProfileData.json();
+            return newProfileData.json();
         } catch(err) {
-            console.error('Ошибка обновления данных профиля: ',err);
+            console.error('Ошибка обновления данных профиля: ', err);
         }
     }
 
@@ -69,9 +69,9 @@ export class Api {
                     avatar: inputValue.avatar
                   })
             });
-            return await newAvatar.json();
+            return newAvatar.json();
         } catch(err) {
-            console.error('Ошибка обновления аватара: ',err);
+            console.error('Ошибка обновления аватара: ', err);
         }
     }
 
@@ -81,9 +81,9 @@ export class Api {
                 method: 'PUT',
                 headers: this._headers
             });
-            return await countLike.json();
+            return countLike.json();
         } catch(err) {
-            console.error('Ошибка постановки лайка: ',err);
+            console.error('Ошибка сервера при постановке лайка: ', err);
         }
     }
 
@@ -93,9 +93,9 @@ export class Api {
                 method: 'DELETE',
                 headers: this._headers
             });
-            return await countLike.json();
+            return countLike.json();
         } catch(err) {
-            console.error('Ошибка удаления лайка: ',err);
+            console.error('Ошибка сервера при удалении лайка: ', err);
         }
     }
     
@@ -105,9 +105,9 @@ export class Api {
                 method: 'DELETE',
                 headers: this._headers
             });
-            return await cardDelete.json();
+            return cardDelete.json();
         } catch(err) {
-            console.error('Ошибка удаления карточки: ',err);
+            console.error('Ошибка удаления карточки: ', err);
         }
     }
 }

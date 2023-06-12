@@ -17,4 +17,8 @@ export class UserInfo {
         this._profileCaption.textContent = info["about"];
         this._profileAvatar.src = info["avatar"];
     }
+
+    setAvatar(newAvatar) {
+        this._profileAvatar.src = newAvatar;
+    }
 }
