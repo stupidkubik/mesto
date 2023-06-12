@@ -1,5 +1,5 @@
 export class Card {
-    constructor(cardItem, myId, { cardObj } ) {
+    constructor(cardItem, myId, cardObj) {
         this._card = cardItem;
         this._myId = myId._id;
         this._templateSelector = cardObj.templateSelector;

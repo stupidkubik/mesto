@@ -80,7 +80,7 @@ const cardObj = { // объект с параметрами создания э�
 }
 
 const cardsList = new Section('.elements__list', (cardItem) => {
-    const newCard = new Card(cardItem, myId, {cardObj} );
+    const newCard = new Card(cardItem, myId, cardObj);
     return newCard.createCard();
 });
 
