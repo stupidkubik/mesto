@@ -34,7 +34,7 @@ export class PopupWithForm extends Popup {
             await this._handleFormSubmit(this._getInputValues());
             this.close();
         } catch(err) {
-            console.log(err)
+            console.log(err);
         } finally {
             this._submitButton.textContent = originalText;
         }

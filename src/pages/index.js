@@ -14,7 +14,7 @@ import whiteLogo from '../images/logo/logo-white.svg';
 
 import './index.css';
 
-import { initElements, validationConfig } from "../scripts/utils/constants.js";
+import { validationConfig } from "../scripts/utils/constants.js";
 import { Card } from "../scripts/components/Card.js";
 import { FormValidator } from "../scripts/components/FormValidator.js";
 import { Section } from '../scripts/components/Section.js';
@@ -40,7 +40,7 @@ popupProfileFormValidator.enableValidation();
 popupCardFormValidator.enableValidation();
 popupAvatarFormValidator.enableValidation();
 
-// Создаем экземпляры классов
+// Загружаем начальные данные с API
 
 const api = new Api( {
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-68',
@@ -48,14 +48,14 @@ const api = new Api( {
         authorization: 'cad6e116-edab-4c4b-8149-8b724d78ff63',
         'Content-Type': 'application/json' 
     }
-} );
+});
 
-api.getCards()
+api.getCards() // Запрашиваем массив карточек с сервера
 .then((cards) => {
     cards.reverse().forEach((card) => cardsList.renderCard(card));
 });
 
-let myId = {};
+let myId = {}; // Создаем объект данных профиля и наполняем его
 
 api.getId()
 .then((user) => {
@@ -63,7 +63,7 @@ api.getId()
     myId = user;
 })
 
-//
+// Создаем экземпляры классов
 
 const popupDelete = new PopupWithConfirmation('.popup_type_delete', async (cardElement, card) => {
     await api.deleteCard(card._id);
@@ -75,14 +75,14 @@ const popupImage = new PopupWithImage('.popup_type_image');
 
 const cardsList = new Section('.elements__list', (cardItem) => {
         const newCard = new Card(
-            cardItem, 
-            'element', 
-            popupDelete, 
-            myId, 
-            (card) => {
+            cardItem, // Элемент карточки 
+            'element', // Селектор контейнера
+            popupDelete, // Попап подтверждения удаления
+            myId, // Объект с моим ID
+            (card) => { // Функция открытия фото в попапе
             popupImage.open(card);
             }, 
-            async (boolean, card) => {
+            async (boolean, card) => { // Функция клика по лайкам
                 try {
                     if(boolean) {
                         return await api.putLike(card._id);
@@ -103,28 +103,22 @@ const userInfo = new UserInfo( {
     avatarSelector: '.profile__avatar' 
 } )
 
-const popupProfile = new PopupWithForm('.popup_type_profile', (inputValues) => {
-    api.updateProfile(inputValues)
-    .then((info) => {
-        userInfo.setUserInfo(info);
-    })
+const popupProfile = new PopupWithForm('.popup_type_profile', async (inputValues) => {
+    const info = await api.updateProfile(inputValues);
+    userInfo.setUserInfo(info);
 }, () => popupProfileFormValidator.checkValidityError());
 
-const popupCard = new PopupWithForm('.popup_type_add', (inputValues) => {
-    api.postCard(inputValues)
-    .then((card) => {
-        cardsList.renderCard(card);
-    })
+const popupCard = new PopupWithForm('.popup_type_add', async (inputValues) => {
+    const card = await api.postCard(inputValues);
+    cardsList.renderCard(card);
 }, () => popupCardFormValidator.checkValidityError());
 
-const popupAvatar = new PopupWithForm('.popup_type_avatar', (inputValue) => {
-    api.updateAvatar(inputValue)
-    .then((info) => {
-        document.querySelector('.profile__avatar').src = info.avatar;
-    })
+const popupAvatar = new PopupWithForm('.popup_type_avatar', async (inputValue) => {
+    const info = await api.updateAvatar(inputValue);
+    document.querySelector('.profile__avatar').src = info.avatar;
 }, () => popupAvatarFormValidator.checkValidityError());
 
-// Добавил проверку валидации на закрытие попапа, чтобы убрать спан с ошибкой
+// Добавляем слушатели
 
 popupImage.setEventListeners();
 popupProfile.setEventListeners();
@@ -154,7 +148,7 @@ popupCardOpenButton.addEventListener('click', handlePopupCard);
 popupAvatarOpenButton.addEventListener('click', handlePopupAvatar);
 
 // for(let i = 0; i < 30; i++) {
-//     api.postCard({ title: 'Yandex.Praktikum', link: 'https://picsum.photos/800/800' })
+//     api.postCard({ title: `Фото №${i}`, link: 'https://picsum.photos/800/800' })
 //     .then((card) => {
 //         cardsList.renderCard(card);
 //     }) 

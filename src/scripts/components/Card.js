@@ -11,7 +11,6 @@ export class Card {
         this._myId = myId._id;
         this._handleCardClick = handleCardClick;
         this._handleLike = handleLike;
-        this.notLiked = true;
     }
 
     _cloneTemplate() {

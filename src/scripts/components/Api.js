@@ -3,7 +3,7 @@ export class Api {
         this._baseUrl = baseUrl;
         this._headers = headers;
     }
-// Обновить ошибки
+
     async getId() {
         try {
             const idData = await fetch(`${this._baseUrl}/users/me`, {
@@ -12,7 +12,7 @@ export class Api {
             });
             return await idData.json();
         } catch(err) {
-            console.log(err);
+            console.error('Ошибка получения ID: ',err);
         }
     }
 
@@ -24,7 +24,7 @@ export class Api {
             });
             return await cardsData.json();
         } catch(err) {
-            console.log(err);
+            console.error('Ошибка получения списка карточек: ',err);
         }
     }
 
@@ -40,7 +40,7 @@ export class Api {
             });
             return await newCardData.json();
         } catch(err) {
-            console.log(err);
+            console.error('Ошибка отправки новой карточки : ',err);
         }
     } 
 
@@ -56,7 +56,7 @@ export class Api {
             });
             return await newProfileData.json();
         } catch(err) {
-            console.log(err);
+            console.error('Ошибка обновления данных профиля: ',err);
         }
     }
 
@@ -71,7 +71,7 @@ export class Api {
             });
             return await newAvatar.json();
         } catch(err) {
-            console.log(err);
+            console.error('Ошибка обновления аватара: ',err);
         }
     }
 
@@ -83,8 +83,8 @@ export class Api {
             });
             return await countLike.json();
         } catch(err) {
-            console.log(err);
-        } 
+            console.error('Ошибка постановки лайка: ',err);
+        }
     }
 
     async deleteLike(cardId) {
@@ -95,8 +95,8 @@ export class Api {
             });
             return await countLike.json();
         } catch(err) {
-            console.log(err);
-        } 
+            console.error('Ошибка удаления лайка: ',err);
+        }
     }
     
     async deleteCard(cardId) {
@@ -107,7 +107,7 @@ export class Api {
             });
             return await cardDelete.json();
         } catch(err) {
-            console.log(err);
-        } 
+            console.error('Ошибка удаления карточки: ',err);
+        }
     }
 }
