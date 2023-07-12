@@ -1,0 +1,7 @@
+:root {
+  --light-theme: rgb(253, 253, 253);
+  --dark-theme: rgb(0, 0, 0);
+  --light-text-color: rgb(255, 255, 255);
+  --dark-text-color: rgb(0, 0, 0);
+  --decorate: rgb(253, 253, 253);
+}

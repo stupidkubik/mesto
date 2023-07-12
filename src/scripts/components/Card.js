@@ -58,9 +58,6 @@ export class Card {
     }
 
     _checkCardOwnerId() {
-        // console.log('my: ', this._myId)
-        // console.log('owner: ', this._card.owner._id)
-
         this._myId === this._card.owner._id
         ? this._trash.style = 'display: block' 
         : this._trash.style = 'display: none';

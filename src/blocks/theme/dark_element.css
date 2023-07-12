@@ -1,0 +1,4 @@
+.dark_element {
+  background-color: var(--light-text-color);
+  color: var(--dark-text-color);
+}

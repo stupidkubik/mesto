@@ -1,0 +1,37 @@
+#toggle {
+  appearance: none;
+  width: 60px;
+  height: 30px;
+  border-radius: 30px;
+  background-color: var(--dark-theme);
+  position: absolute;
+  right: 245px;
+  transition: all 0.5s ease-in;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* Making a dot switch inside the Toggle Button */
+#toggle::before {
+  content: '';
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: var(--light-theme);
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  transform: translateY(-50%);
+  transition: all 0.5s ease-in;
+}
+
+/* Changing toggle button background when checked */
+#toggle:checked {
+  background: var(--decorate);
+}
+
+/* Changing dot switch color and moving to the right side when checked */
+#toggle:checked::before {
+  background: var(--dark-theme);
+  left: 32px;
+}
